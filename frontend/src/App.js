@@ -1,25 +1,74 @@
 import React from 'react';
-import logo from './logo.svg';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+
 import './App.css';
+import { makeStyles } from '@material-ui/core/styles';
+
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+
+import IconButton from '@material-ui/core/IconButton';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+
+import Home from './pages/Home';
+import LoginStudent from './pages/LoginStudent';
+import LoginPracownik from './pages/LoginPracownik';
+import PanelStudent from './pages/PanelStudent';
+import PanelPracownik from './pages/PanelPracownik';
+
+const useStyles = makeStyles(theme => ({
+  flex: {
+    flexGrow: 1,
+  },
+}));
 
 function App() {
+  const classes = useStyles();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div>
+        <AppBar position="static" color="primary">
+          <Toolbar>
+            <Typography variant="h6" color="inherit" className={classes.flex} component={Link} to="/">
+              AGH
+            </Typography>
+            <IconButton
+                color="inherit"
+                component={Link}
+                to="/pracownik/login"
+              >
+                <AccountCircle />
+            </IconButton>
+            <IconButton
+                color="inherit"
+                component={Link}
+                to="/student/login"
+              >
+                <AccountCircle />
+            </IconButton>
+          </Toolbar>
+        </AppBar>
+
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route path="/student/login">
+            <LoginStudent />
+          </Route>
+          <Route path="/pracownik/login">
+            <LoginPracownik />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
   );
 }
 
