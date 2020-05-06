@@ -66,6 +66,12 @@ function App() {
           <Route path="/pracownik/login">
             <LoginPracownik />
           </Route>
+          <Route path="/pracownik/login">
+            <PanelStudent />
+          </Route>
+          <Route path="/pracownik/login">
+            <PanelPracownik />
+          </Route>
         </Switch>
       </div>
     </Router>
