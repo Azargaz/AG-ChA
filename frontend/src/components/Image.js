@@ -13,12 +13,12 @@ const useStyles = makeStyles(() => ({
 
 function Image(props) {
     const classes = useStyles();
-    const { src } = props;
+    const { src, size } = props;
 
     return (
         <Grid container justify="center" alignItems="center" spacing={3}>
             <Grid item xs={12}>
-                <img src={src} alt="" height="250" className={classes.center}></img>
+                <img src={src} alt="" height={size == null ? "250" : size} className={classes.center}></img>
             </Grid>
         </Grid>
     )

@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  BrowserRouter as Router,
+  Router,
   Switch,
   Route,
   Link
@@ -8,6 +8,10 @@ import {
 
 import './App.css';
 import { makeStyles } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
+import theme from './utils/theme';
+
+import history from './utils/history';
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -32,7 +36,8 @@ function App() {
   const classes = useStyles();
 
   return (
-    <Router>
+    <ThemeProvider theme={theme()}>
+    <Router history={history}>
       <div>
         <AppBar position="static" color="primary">
           <Toolbar>
@@ -66,15 +71,16 @@ function App() {
           <Route path="/pracownik/login">
             <LoginPracownik />
           </Route>
-          <Route path="/pracownik/login">
+          <Route path="/student/panel">
             <PanelStudent />
           </Route>
-          <Route path="/pracownik/login">
+          <Route path="/pracownik/panel">
             <PanelPracownik />
           </Route>
         </Switch>
       </div>
     </Router>
+    </ThemeProvider>
   );
 }
 
