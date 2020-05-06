@@ -7,6 +7,7 @@ import LogoAGH from '../img/logo_agh.jpg';
 import { Typography } from '@material-ui/core';
 
 function Home() {
+    
     return (
         <Grid container justify="center" alignItems="center">
             <Grid item md={3}>
