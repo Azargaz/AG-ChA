@@ -17,6 +17,13 @@ export default () => {
                 dark: '#b8475a',
                 contrastText: '#fff',
             }
+        },
+        overrides: {
+            MuiRadio: {
+                root: {
+                    padding: 1
+                }
+            }
         }
     })
 };
