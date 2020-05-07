@@ -1,16 +1,16 @@
 import React, { useState } from 'react'
 
-import history from '../utils/history';
+import history from '../../utils/history';
 import Grid from '@material-ui/core/Grid';
 
-import LoginForm from '../components/LoginForm';
-import Image from '../components/Image';
-import LogoAGH from '../img/logo_agh.jpg';
+import LoginForm from '../../components/LoginForm';
+import Image from '../../components/Image';
+import LogoAGH from '../../img/logo_agh.jpg';
 
-function LoginPracownik() {
+function LoginStudent() {
     const [formData, setFormData] = useState({
-        login: '',
-        haslo: ''
+        indeks: '',
+        PESEL: ''
     })
 
     const handleChange = (event) => {
@@ -22,7 +22,7 @@ function LoginPracownik() {
 
     const handleSubmit = () => {
         console.log(formData);
-        history.push("/pracownik/panel/");
+        history.push("/student/panel/");
     }
 
     return (
@@ -30,8 +30,8 @@ function LoginPracownik() {
             <Grid item md={3}>
                 <Image src={LogoAGH}/>
                 <LoginForm fields={[
-                    { name: "login", type: "text", label: "Login" },
-                    { name: "haslo", type: "password", label: "Hasło" }
+                    { name: "indeks", type: "text", label: "Numer indeksu" },
+                    { name: "PESEL", type: "password", label: "PESEL" }
                 ]}
                 button={{
                     color: "primary",
@@ -44,4 +44,4 @@ function LoginPracownik() {
     )
 }
 
-export default LoginPracownik
+export default LoginStudent

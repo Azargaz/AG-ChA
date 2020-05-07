@@ -21,10 +21,12 @@ import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 
 import Home from './pages/Home';
-import LoginStudent from './pages/LoginStudent';
-import LoginPracownik from './pages/LoginPracownik';
-import PanelStudent from './pages/PanelStudent';
-import PanelPracownik from './pages/PanelPracownik';
+
+import LoginStudent from './pages/Student/LoginStudent';
+import PanelStudent from './pages/Student/PanelStudent';
+
+import LoginPracownik from './pages/Pracownik/LoginPracownik';
+import PanelPracownik from './pages/Pracownik/PanelPracownik';
 
 const useStyles = makeStyles(theme => ({
   flex: {
@@ -62,21 +64,11 @@ function App() {
         </AppBar>
 
         <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route path="/student/login">
-            <LoginStudent />
-          </Route>
-          <Route path="/pracownik/login">
-            <LoginPracownik />
-          </Route>
-          <Route path="/student/panel">
-            <PanelStudent />
-          </Route>
-          <Route path="/pracownik/panel">
-            <PanelPracownik />
-          </Route>
+          <Route exact path="/" component={Home} />
+          <Route path="/pracownik/login" component={LoginPracownik} />
+          <Route path="/pracownik/panel" component={PanelPracownik} />
+          <Route path="/student/login" component={LoginStudent} />
+          <Route path="/student/panel" component={PanelStudent} />
         </Switch>
       </div>
     </Router>
