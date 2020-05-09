@@ -1,3 +1,5 @@
+CREATE SCHEMA projekt;
+set SEARCH_PATH TO projekt,public;
 
 CREATE SEQUENCE grupa_id_grupa_seq;
 
@@ -52,6 +54,8 @@ CREATE SEQUENCE prowadzacy_id_prowadzacy_seq_1;
 CREATE TABLE prowadzacy (
                 id_prowadzacy NUMERIC NOT NULL DEFAULT nextval('prowadzacy_id_prowadzacy_seq_1'),
                 id_przedmiot NUMERIC NOT NULL,
+                tytul text,
+                imie_nazwisko text,
                 CONSTRAINT prowadzacy_pk PRIMARY KEY (id_prowadzacy)
 );
 
