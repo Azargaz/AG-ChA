@@ -8,9 +8,9 @@ function ButtonList(props) {
     const { buttons } = props;
 
     return (
-        <Grid container justify="center" alignItems="center" spacing={3}>
+        <Grid container justify="center" alignItems="center" spacing={4}>
             {buttons.map((button, index) => (
-                <Grid item xs={12} key={index}>
+                <Grid item xs={8} key={index}>
                     <Button fullWidth variant="contained" component={Link} color={button.color} to={button.link}>{button.text}</Button>
                 </Grid>
             ))}

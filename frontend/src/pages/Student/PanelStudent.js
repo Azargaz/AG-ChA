@@ -27,7 +27,7 @@ function PanelStudent(props) {
 
     return (
         <Grid container justify="center" alignItems="center">
-            <Grid item md={6}>
+            <Grid item md={8}>
                 <Image src={LogoAGH} size={pathname === '/student/panel/' ? 250:150} />
 
                 <Route exact path={'/student/panel/'} component={Panel} />
