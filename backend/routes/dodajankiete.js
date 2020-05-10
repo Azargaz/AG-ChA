@@ -101,10 +101,10 @@ router.get('/dodajankiete/prowadzacy', (req, res) => {
 router.post('/dodajankiete', auth, (req, res) => {
 
     const { prowadzacy } = req.body.prowadzacy_id;
-    const { lista_studentow } = req.body.studenci;
+
     const { data_zamkniecia} = req.body.data_zam;
 
-     db.query('INSERT INTO projekt.ankieta VALUES ($1, $2, $3)', [nextval(ankieta_id_ankieta_seq), prowadzacy, data_zamkniecia])
+     db.query('INSERT INTO projekt.ankieta VALUES (nextval(ankieta_id_ankieta_seq), $1, $2)', [prowadzacy, data_zamkniecia])
         .then(result => {
             res.status(201).json({
                 status: "ok"
@@ -118,15 +118,13 @@ router.post('/dodajankiete', auth, (req, res) => {
             });
         })
 
+    const { lista_studentow } = req.body.studenci;
+
 /////tutaj potrzebny insert do student_ankieta (rozpakowanie listy)
 
 
 
 })
-
-
-
-
 
 
 

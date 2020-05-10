@@ -30,7 +30,7 @@ app.use('/dodajankiete/wydzial', ankietaAddRouter);
 app.use('/dodajankiete/kierunek', ankietaAddRouter);
 app.use('/dodajankiete/prowadzacy', ankietaAddRouter);
 app.use('/dodajankiete/przedmiot', ankietaAddRouter);
-app.use('/dodajankiete',ankietaRouter);
+app.use('/dodajankiete',ankietaAddRouter);
 
 // App listening on port
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))
