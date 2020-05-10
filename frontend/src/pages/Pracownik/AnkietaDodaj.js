@@ -13,21 +13,24 @@ function getSteps() {
     return ['Wybierz wydział, kierunek, przedmiot i prowadzącego', 'Dodaj studentów', 'Ustaw datę'];
 }
 
+const defaultParams = {
+    id_wydzial: '',
+    id_kierunek: '',
+    id_przedmiot: '',
+    id_prowadzacy: '',
+    studenci: [],
+    data: ''
+}
+
 function AnkietaDodaj() {
-    const [params, setParams] = useState({
-        id_wydzial: '',
-        id_kierunek: '',
-        id_przedmiot: '',
-        id_prowadzacy: '',
-        studenci: []
-    })
+    const [params, setParams] = useState(defaultParams)
 
     const getStepContent = (stepIndex) => {
         switch (stepIndex) {
         case 0:
             return (<WyborProwadzacego params={params} setParams={setParams} />);
         case 1:
-            return (<WyborStudentow />);
+            return (<WyborStudentow params={params} setParams={setParams} />);
         case 2:
             return (<Grid container justify="center" alignItems="center">
                         <Grid item xs={4}>
@@ -35,12 +38,12 @@ function AnkietaDodaj() {
                                 id="date"
                                 label="Data zamknięcia ankiety"
                                 type="date"
-                                defaultValue="2017-05-24"
                                 InputLabelProps={{
                                     shrink: true,
                                 }}
                                 fullWidth
                                 margin="normal"
+                                onChange={(event) => setParams({ ...params, data: event.target.value})}
                             />
                         </Grid>
                     </Grid>
@@ -57,13 +60,27 @@ function AnkietaDodaj() {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
 
-    const handleBack = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    };
+    // const handleBack = () => {
+    //     setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    // };
 
     const handleReset = () => {
         setActiveStep(0);
+        setParams(defaultParams);
     };
+
+    const checkIfReadyForNext = () => {
+        switch(activeStep) {
+            case 0:
+                return params.id_prowadzacy !== '';
+            case 1:
+                return params.studenci.length > 0;
+            case 2:
+                return params.data !== '';
+            default:
+                return 'Unknown activeStep';
+        }
+    }
 
     return (
         <div>
@@ -77,15 +94,15 @@ function AnkietaDodaj() {
                 getStepContent(activeStep)
             )}
             <Grid container justify="center">
-                <Button
+                {/* <Button
                     disabled={activeStep === 0}
                     onClick={handleBack}
                 >
                     Wróć
-                </Button>
+                </Button> */}
                 {activeStep < steps.length ? (
-                    <Button variant="contained" color="primary" onClick={handleNext}>
-                        {activeStep === steps.length - 1 ? 'Zakończ' : 'Dalej'}
+                    <Button variant="contained" color="primary" onClick={handleNext} disabled={!checkIfReadyForNext()}>
+                        Dalej
                     </Button>
                 ) : (
                     <>

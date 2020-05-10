@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { green, red } from '@material-ui/core/colors';
 import Radio from '@material-ui/core/Radio';
@@ -12,7 +12,7 @@ const GreenRadio = withStyles({
       },
     },
     checked: {},
-})((props) => <Radio color="default" {...props} />);
+})(React.forwardRef((props, ref) => <Radio color="default" {...props} innerRef={ref} />));
 
 const RedRadio = withStyles({
     root: {
@@ -22,20 +22,20 @@ const RedRadio = withStyles({
       },
     },
     checked: {},
-})((props) => <Radio color="default" {...props} />);
+})(React.forwardRef((props, ref) => <Radio color="default" {...props} innerRef={ref} />));
 
-function ClosedQuestion() {
-    const [selectedValue, setSelectedValue] = React.useState('Nie mam zdania');
+function ClosedQuestion(props) {
+    const { id, onUpdateAnswer, answer } = props;
 
     const handleChange = (event) => {
-        setSelectedValue(event.target.value);
+        onUpdateAnswer(id, event.target.value);
     };
 
     return (
         <div>
         <Tooltip title="Nie">
             <RedRadio
-                checked={selectedValue === 'Nie'}
+                checked={answer === 'Nie'}
                 onChange={handleChange}
                 value="Nie"
                 name="radio-button-demo"
@@ -43,7 +43,7 @@ function ClosedQuestion() {
         </Tooltip>
         <Tooltip title="Raczej nie">
             <RedRadio
-                checked={selectedValue === 'Raczej nie'}
+                checked={answer === 'Raczej nie'}
                 onChange={handleChange}
                 value="Raczej nie"
                 name="radio-button-demo"
@@ -51,7 +51,7 @@ function ClosedQuestion() {
         </Tooltip>
         <Tooltip title="Nie mam zdania">
             <Radio
-                checked={selectedValue === 'Nie mam zdania'}
+                checked={answer === 'Nie mam zdania'}
                 onChange={handleChange}
                 value="Nie mam zdania"
                 name="radio-button-demo"
@@ -59,7 +59,7 @@ function ClosedQuestion() {
         </Tooltip>
         <Tooltip title="Raczej tak">
             <GreenRadio
-                checked={selectedValue === 'Raczej tak'}
+                checked={answer === 'Raczej tak'}
                 onChange={handleChange}
                 value="Raczej tak"
                 name="radio-button-demo"
@@ -67,7 +67,7 @@ function ClosedQuestion() {
         </Tooltip>
         <Tooltip title="Tak">
             <GreenRadio
-                checked={selectedValue === 'Tak'}
+                checked={answer === 'Tak'}
                 onChange={handleChange}
                 value="Tak"
                 name="radio-button-demo"

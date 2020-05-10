@@ -12,6 +12,7 @@ function LoginPracownik() {
         login: '',
         haslo: ''
     })
+    const [loading, setLoading] = useState(false)
 
     const handleChange = (event) => {
         setFormData({
@@ -21,24 +22,30 @@ function LoginPracownik() {
     }
 
     const handleSubmit = () => {
-        console.log(formData);
-        history.push("/pracownik/panel/");
+        setLoading(true);
+        setTimeout(() => {
+            history.push("/pracownik/panel/");
+            setLoading(false);
+        }, 500)
     }
 
     return (
         <Grid container justify="center" alignItems="center">
             <Grid item md={3}>
                 <Image src={LogoAGH}/>
-                <LoginForm fields={[
-                    { name: "login", type: "text", label: "Login" },
-                    { name: "haslo", type: "password", label: "Hasło" }
-                ]}
-                button={{
-                    color: "primary",
-                    text: "Zaloguj"
-                }}
-                handleSubmit={handleSubmit}
-                handleChange={handleChange} />
+                <LoginForm 
+                    fields={[
+                        { name: "login", type: "text", label: "Login" },
+                        { name: "haslo", type: "password", label: "Hasło" }
+                    ]}
+                    button={{
+                        color: "primary",
+                        text: "Zaloguj"
+                    }}
+                    handleSubmit={handleSubmit}
+                    handleChange={handleChange} 
+                    loading={loading}
+                />
             </Grid>
         </Grid>
     )

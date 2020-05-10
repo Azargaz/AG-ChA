@@ -12,6 +12,7 @@ function LoginStudent() {
         indeks: '',
         PESEL: ''
     })
+    const [loading, setLoading] = useState(false)
 
     const handleChange = (event) => {
         setFormData({
@@ -22,23 +23,30 @@ function LoginStudent() {
 
     const handleSubmit = () => {
         console.log(formData);
-        history.push("/student/panel/");
+        setLoading(true);
+        setTimeout(() => {
+            history.push("/student/panel/");
+            setLoading(false);
+        }, 500)
     }
 
     return (
         <Grid container justify="center" alignItems="center">
             <Grid item md={3}>
                 <Image src={LogoAGH}/>
-                <LoginForm fields={[
-                    { name: "indeks", type: "text", label: "Numer indeksu" },
-                    { name: "PESEL", type: "password", label: "PESEL" }
-                ]}
-                button={{
-                    color: "primary",
-                    text: "Zaloguj"
-                }}
-                handleSubmit={handleSubmit}
-                handleChange={handleChange} />
+                <LoginForm 
+                    fields={[
+                        { name: "indeks", type: "text", label: "Numer indeksu" },
+                        { name: "PESEL", type: "password", label: "PESEL" }
+                    ]}
+                    button={{
+                        color: "primary",
+                        text: "Zaloguj"
+                    }}
+                    handleSubmit={handleSubmit}
+                    handleChange={handleChange} 
+                    loading={loading}
+                />
             </Grid>
         </Grid>
     )

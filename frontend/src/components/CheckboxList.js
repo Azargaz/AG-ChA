@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
@@ -17,28 +17,41 @@ const useStyles = makeStyles(theme => ({
       },
 }));
 
-export default function CheckboxList() {
+export default function CheckboxList(props) {
     const classes = useStyles();
+    const { data, labelFunction, onChange } = props;
+    const [checked, setChecked] = useState([]);
 
-    const [checked, setChecked] = React.useState(false);
+    useEffect(() => {
+        onChange(checked);
+    }, [checked])
 
-    const handleToggle = value => () => {
-        setChecked(!value);
+    const handleToggle = (value) => () => {
+        const currentIndex = checked.indexOf(value);
+        const newChecked = [...checked];
+
+        if (currentIndex === -1) {
+            newChecked.push(value);
+        } else {
+            newChecked.splice(currentIndex, 1);
+        }
+
+        setChecked(newChecked);
     };
 
     return (
         <div>
             <List className={classes.root}>
-                {[0,1,2,3,4,5,6,7,8,9,10,11,12].map(element => (
-                    <ListItem button onClick={handleToggle(checked)}>
+                {data.map(element => (
+                    <ListItem button onClick={handleToggle(element.id)} key={element.id}>
                         <ListItemIcon>
                             <Checkbox
-                                checked={checked}
+                                checked={checked.indexOf(element.id) !== -1}
                                 tabIndex={-1}
                                 disableRipple
                             />
                         </ListItemIcon>
-                        <ListItemText primary={`Jan Kowalski ${element}`} />
+                        <ListItemText primary={labelFunction(element)} />
                     </ListItem>
                 ))}
             </List>

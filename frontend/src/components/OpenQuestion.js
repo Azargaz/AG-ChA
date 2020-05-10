@@ -1,21 +1,21 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 import TextField from '@material-ui/core/TextField';
 
-function OpenQuestion() {
-    const [value, setValue] = React.useState('-');
+function OpenQuestion(props) {
+    const { id, onUpdateAnswer, answer } = props;
 
     const handleChange = (event) => {
-        setValue(event.target.value);
+        onUpdateAnswer(id, event.target.value);
     };
 
     return (
         <div>
             <TextField
-                id="standard-multiline-flexible"
+                id={"standard-multiline-flexible-"+id}
                 fullWidth
                 multiline
-                value={value}
+                value={answer}
                 onChange={handleChange}
             />
         </div>

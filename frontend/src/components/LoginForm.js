@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles(theme => ({
     fullWidth: {
@@ -18,7 +19,7 @@ const useStyles = makeStyles(theme => ({
 
 function LoginForm(props) {
     const classes = useStyles();
-    const { fields, button, handleSubmit, handleChange } = props;
+    const { fields, button, handleSubmit, handleChange, loading } = props;
 
     return (
         <form noValidate autoComplete="off">
@@ -30,8 +31,8 @@ function LoginForm(props) {
                 ))}
                 <Grid item>
                     <Grid container justify="center">
-                        <Button variant="contained" color={button.color} className={classes.button} onClick={handleSubmit}>
-                            {button.text}
+                        <Button variant="contained" color={button.color} className={classes.button} onClick={handleSubmit} disabled={loading}>
+                            {loading ? <CircularProgress size={20} /> : button.text}
                         </Button>
                     </Grid>
                 </Grid>

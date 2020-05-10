@@ -11,33 +11,11 @@ import Paper from '@material-ui/core/Paper';
 import ClosedQuestion from './ClosedQuestion';
 import OpenQuestion from './OpenQuestion';
 
-/*
-Przykład użycia:
-
-const data = [
-        { number: "1", question: "Zajęcia były prowadzone zgodnie z sylabusem przedmiotu/modułu (np. kryteria oceniania, wymiar godzin, osiągnięte efekty kształcenia)." },
-        { number: "2", question: "Kryteria i zasady obliczania oceny końcowej lub zaliczenia zostały określone na pierwszych zajęciach." },
-        { number: "3", question: "Zajęcia były należycie przygotowane przez prowadzącego" },
-        { number: "4", question: "Osoba prowadząca zajęcia przekazywała wiadomości w sposób jasny  i zrozumiały" },
-        { number: "5", question: "Lorem ipsum" },
-        { number: "6", question: "Lorem ipsum" },
-        { number: "7", question: "Lorem ipsum" },
-        { number: "8", question: "Lorem ipsum" },
-        { number: "9", question: "Lorem ipsum" },
-    ]
-
-    const open = [3, 4];    
-    const headers = ["Nr", "Pytanie", "Odpowiedź"];
-
-<QuestionsTable headers={headers} data={data} openQuestions={open}/>
-
-*/
-
 function QuestionsTable(props) {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(1);
 
-    const { headers, data, openQuestions } = props;
+    const { headers, data, openQuestions, onUpdateAnswer, answers } = props;
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -49,6 +27,11 @@ function QuestionsTable(props) {
     };
 
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
+
+    const getAnswer = (id) => {
+        const index = answers.findIndex(answer => answer.id === Number(id));
+        return index === -1 ? '' : answers[index].odp;
+    }
 
     return (
         <div>
@@ -72,8 +55,12 @@ function QuestionsTable(props) {
                                     {row[key]}
                                 </TableCell>
                             ))}
-                            <TableCell align="center">
-                                {openQuestions.includes(Number(row.number)) ? <OpenQuestion/> : <ClosedQuestion/>}
+                            <TableCell align="center" style={{"whiteSpace": 'nowrap'}}>
+                                {openQuestions.includes(Number(row["id"])) ? (
+                                    <OpenQuestion id={row["id"]} onUpdateAnswer={onUpdateAnswer} answer={getAnswer(row["id"])} /> 
+                                ) : (
+                                    <ClosedQuestion id={row["id"]} onUpdateAnswer={onUpdateAnswer} answer={getAnswer(row["id"])} />
+                                )}
                             </TableCell>
                         </TableRow>
                     ))}
@@ -93,6 +80,7 @@ function QuestionsTable(props) {
                 page={page}
                 onChangePage={handleChangePage}
                 onChangeRowsPerPage={handleChangeRowsPerPage}
+                labelRowsPerPage="Pytania na strone: "
             />
         </Paper>
         </div>

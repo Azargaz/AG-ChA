@@ -6,27 +6,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 
-/*
-Przykład użycia:
-
-const [test, setTest] = React.useState('');
-
-const handleChange = (event) => {
-    setTest(event.target.value);
-}
-
-<SelectList 
-    label="Test" 
-    idName="id" 
-    name="name"
-    value={test} 
-    itemList={[{"id": "1", "name": "aaaaa"}, {"id": "2", "name": "bbbbbb"}]} 
-    loading={false} 
-    handleChange={handleChange}
-/> 
-
-*/
-
 function SelectList(props) {
     const { label, idName, name, value, itemList, loading, disabled, handleChange } = props;
 

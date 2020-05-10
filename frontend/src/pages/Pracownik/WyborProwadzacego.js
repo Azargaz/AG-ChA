@@ -28,7 +28,6 @@ function WyborProwadzacego(props) {
     ])
 
     const handleChange = (event) => {
-        console.log(event.target.name, event.target.value);
         setParams({
             ...params,
             [event.target.name]: event.target.value
@@ -57,7 +56,7 @@ function WyborProwadzacego(props) {
                     value={params['id_kierunek']} 
                     itemList={kierunki} 
                     loading={false}
-                    disabled={false}
+                    disabled={params['id_wydzial'] === ''}
                     handleChange={handleChange}
                 />
             </Grid>
@@ -69,7 +68,7 @@ function WyborProwadzacego(props) {
                     value={params['id_przedmiot']} 
                     itemList={przedmioty} 
                     loading={false}
-                    disabled={false}
+                    disabled={params['id_kierunek'] === ''}
                     handleChange={handleChange}
                 />
             </Grid>
@@ -81,7 +80,7 @@ function WyborProwadzacego(props) {
                     value={params['id_prowadzacy']} 
                     itemList={prowadzacy} 
                     loading={false}
-                    disabled={false}
+                    disabled={params['id_przedmiot'] === ''}
                     handleChange={handleChange}
                 /> 
             </Grid>

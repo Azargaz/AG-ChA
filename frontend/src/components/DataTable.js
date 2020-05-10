@@ -30,7 +30,7 @@ function DataTable(props) {
                         </TableCell>
                     ))}
                     <TableCell align="right">
-                        {button}
+                        {button(row["id"])}
                     </TableCell>
                 </TableRow>
                 ))}

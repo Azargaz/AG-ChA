@@ -21,7 +21,7 @@ export default () => {
         overrides: {
             MuiRadio: {
                 root: {
-                    padding: 1
+                    padding: 0
                 }
             }
         }
