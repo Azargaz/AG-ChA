@@ -3,7 +3,7 @@ const db = require('./polaczenie');
 
 ////wybor wydzialu
 router.get('/wydzial', (req, res) => {
-	db.query('select nazwa_skrocona from projekt.wydzial')
+	db.query('select id_wydzial, nazwa_skrocona from projekt.wydzial')
 		.then((result) => {
 			res.status(201).json(result.rows);
 		})
@@ -17,11 +17,11 @@ router.get('/wydzial', (req, res) => {
 });
 
 ///wybor kierunku
-router.get('/kierunek/', (req, res) => {
-	const { wydzial } = req.body;
+router.get('/kierunek/:wydzial', (req, res) => {
+	const { wydzial } = req.params;
 
 	db.query(
-		'with cte as (select id_wydzial from projekt.wydzial where nazwa_skrocona = $1 ) select k.pelna_nazwa from projekt.kierunek k join cte on k.id_wydzial = cte.id_wydzial',
+		'with cte as (select id_wydzial from projekt.wydzial where id_wydzial = $1 ) select k.id_kierunek, k.pelna_nazwa from projekt.kierunek k join cte on k.id_wydzial = cte.id_wydzial',
 		[wydzial]
 	)
 		.then((result) => {
@@ -37,12 +37,12 @@ router.get('/kierunek/', (req, res) => {
 });
 
 ///wybor Przedmiotu
-router.get('/przedmiot', (req, res) => {
-	const { wydzial } = req.body;
-	const { kierunek } = req.body;
+router.get('/przedmiot/:wydzial/:kierunek', (req, res) => {
+	const { wydzial } = req.params;
+	const { kierunek } = req.params;
 
 	db.query(
-		'with cte2 as (with cte as (select id_wydzial from projekt.wydzial where nazwa_skrocona = $1 ) select k.id_kierunek from projekt.kierunek k join cte on k.id_wydzial = cte.id_wydzial where k.pelna_nazwa = $2) select p.nazwa from projekt.przemiot join cte2 on p.id_kierunek = cte2.id_kierunek ',
+		'with cte2 as (with cte as (select id_wydzial from projekt.wydzial where id_wydzial = $1 ) select k.id_kierunek from projekt.kierunek k join cte on k.id_wydzial = cte.id_wydzial where k.id_kierunek = $2) select p.id_przedmiot, p.nazwa from projekt.przedmiot p join cte2 on p.id_kierunek = cte2.id_kierunek ',
 		[wydzial, kierunek]
 	)
 		.then((result) => {
@@ -58,14 +58,34 @@ router.get('/przedmiot', (req, res) => {
 });
 
 ///wybor Prowadzacego
-router.get('/prowadzacy', (req, res) => {
-	const { wydzial } = req.body;
-	const { kierunek } = req.body;
-	const { przedmiot } = req.body;
+router.get('/prowadzacy/:wydzial/:kierunek/:przedmiot', (req, res) => {
+	const { wydzial } = req.params;
+	const { kierunek } = req.params;
+	const { przedmiot } = req.params;
 
 	db.query(
-		'with cte3 as( with cte2 as (with cte as (select id_wydzial from projekt.wydzial where nazwa_skrocona = $1 ) select k.id_kierunek from projekt.kierunek k join cte on k.id_wydzial = cte.id_wydzial where k.pelna_nazwa = $2) select id_przedmiot from projekt.przemiot join cte2 on p.id_kierunek = cte2.id_kierunek where p.nazwa = $3) select pr.tytul,pr.imie,pr.nazwisko from  projekt.prowadzacy pr join cte3 on pr.id_przedmiot = cte3.id_przedmiot ',
+		'with cte3 as( with cte2 as (with cte as (select id_wydzial from projekt.wydzial where id_wydzial = $1 ) select k.id_kierunek from projekt.kierunek k join cte on k.id_wydzial = cte.id_wydzial where k.id_kierunek = $2) select id_przedmiot from projekt.przedmiot p join cte2 on p.id_kierunek = cte2.id_kierunek where p.id_przedmiot = $3) select pr.id_prowadzacy, pr.imie_nazwisko from  projekt.prowadzacy pr join cte3 on pr.id_przedmiot = cte3.id_przedmiot ',
 		[wydzial, kierunek, przedmiot]
+	)
+		.then((result) => {
+			res.status(201).json(result.rows);
+		})
+		.catch((err) => {
+			console.error(err);
+			res.status(500).json({
+				status: 'error',
+				error: err.message,
+			});
+		});
+});
+
+///wybor Prowadzacego
+router.get('/studenci/:wydzial', (req, res) => {
+	const { wydzial } = req.params;
+
+	db.query(
+		'select s.id_student, s.imie, s.nazwisko from projekt.student s where s.id_wydzial = $1',
+		[wydzial]
 	)
 		.then((result) => {
 			res.status(201).json(result.rows);
@@ -81,21 +101,19 @@ router.get('/prowadzacy', (req, res) => {
 
 ////dodawanie ankiety
 router.post('/', (req, res) => {
-	const { id_prowadzacy } = req.body;
-    const { data_zamkniecia } = req.body;
-	const { lista_studentow } = req.body;
+	const { id_prowadzacy, data, studenci } = req.body;
 
 	db.query(
 		'INSERT INTO projekt.ankieta(id_prowadzacy, data_zamkniecia) VALUES ($1, $2) RETURNING ankieta.id_ankieta',
-		[id_prowadzacy, data_zamkniecia]
+		[id_prowadzacy, data]
 	)
 		.then((result) => {
             console.log('INSERT 1 - ok');
             const { id_ankieta } = result.rows[0];            
-			const query = 'INSERT INTO projekt.student_ankieta VALUES ' + ankietaMultirowInsert(lista_studentow, id_ankieta) + ';';
+			const query = 'INSERT INTO projekt.student_ankieta VALUES ' + ankietaMultirowInsert(studenci, id_ankieta) + ';';
 			db.query(
 				query,
-				lista_studentow
+				studenci
 			)
 				.then((result) => {
                     console.log('INSERT 2 - ok');

@@ -9,7 +9,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
 function DataTable(props) {
-    const { headers, data, button } = props;
+    const { idName, headers, data, button } = props;
 
     return (
         <TableContainer component={Paper}>
@@ -30,7 +30,7 @@ function DataTable(props) {
                         </TableCell>
                     ))}
                     <TableCell align="right">
-                        {button(row["id"])}
+                        {button(row[idName])}
                     </TableCell>
                 </TableRow>
                 ))}

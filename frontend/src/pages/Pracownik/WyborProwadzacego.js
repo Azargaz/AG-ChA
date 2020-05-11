@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import Grid from '@material-ui/core/Grid';
 
@@ -7,25 +7,38 @@ import SelectList from '../../components/SelectList';
 function WyborProwadzacego(props) {
     const { params, setParams } = props;
 
-    const [wydzialy, setWydzialy] = useState([
-        {"id_wydzial": "1", "nazwa": "xxxxx"}, 
-        {"id_wydzial": "2", "nazwa": "yyyyy"}
-    ])
+    useEffect(() => {
+        async function fetchWydzialy() {
+            let response = await fetch('http://localhost:3001/dodajankiete/wydzial');
+            response.json().then(json => setWydzialy(json));
+        }
+        async function fetchKierunki() {
+            let response = await fetch('http://localhost:3001/dodajankiete/kierunek/' + params.id_wydzial);
+            response.json().then(json => setKierunki(json));
+        }
+        async function fetchPrzedmioty() {
+            let response = await fetch(`http://localhost:3001/dodajankiete/przedmiot/${params.id_wydzial}/${params.id_kierunek}`);
+            response.json().then(json => setPrzedmioty(json));
+        }
+        async function fetchProwadzacy() {
+            let response = await fetch(`http://localhost:3001/dodajankiete/prowadzacy/${params.id_wydzial}/${params.id_kierunek}/${params.id_przedmiot}`);
+            response.json().then(json => setProwadzacy(json));
+        }
 
-    const [kierunki, setKierunki] = useState([
-        {"id_kierunek": "1", "nazwa": "zzzzzz"}, 
-        {"id_kierunek": "2", "nazwa": "wwwwww"}
-    ])
+        if(params.id_wydzial === '')
+            fetchWydzialy();
+        if(params.id_wydzial !== '' && params.id_kierunek === '')
+            fetchKierunki();
+        if(params.id_wydzial !== '' && params.id_kierunek !== '' && params.id_przedmiot === '')
+            fetchPrzedmioty();
+        if(params.id_wydzial !== '' && params.id_kierunek !== '' && params.id_przedmiot !== '' && params.id_prowadzacy === '')
+        fetchProwadzacy();
+    }, [params])
 
-    const [przedmioty, setPrzedmioty] = useState([
-        {"id_przedmiot": "1", "nazwa": "aaaaaa"}, 
-        {"id_przedmiot": "2", "nazwa": "bbbbbb"}
-    ])
-
-    const [prowadzacy, setProwadzacy] = useState([
-        {"id_prowadzacy": "1", "nazwa": "cccccc"}, 
-        {"id_prowadzacy": "2", "nazwa": "dddddd"}
-    ])
+    const [wydzialy, setWydzialy] = useState([])
+    const [kierunki, setKierunki] = useState([])
+    const [przedmioty, setPrzedmioty] = useState([])
+    const [prowadzacy, setProwadzacy] = useState([])
 
     const handleChange = (event) => {
         setParams({
@@ -40,7 +53,7 @@ function WyborProwadzacego(props) {
                 <SelectList 
                     label="Wydział" 
                     idName="id_wydzial" 
-                    name="nazwa"
+                    name="nazwa_skrocona"
                     value={params['id_wydzial']} 
                     itemList={wydzialy} 
                     loading={false}
@@ -52,7 +65,7 @@ function WyborProwadzacego(props) {
                 <SelectList 
                     label="Kierunek" 
                     idName="id_kierunek" 
-                    name="nazwa"
+                    name="pelna_nazwa"
                     value={params['id_kierunek']} 
                     itemList={kierunki} 
                     loading={false}
@@ -76,7 +89,7 @@ function WyborProwadzacego(props) {
                 <SelectList 
                     label="Prowadzący" 
                     idName="id_prowadzacy" 
-                    name="nazwa"
+                    name="imie_nazwisko"
                     value={params['id_prowadzacy']} 
                     itemList={prowadzacy} 
                     loading={false}

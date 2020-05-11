@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function CheckboxList(props) {
     const classes = useStyles();
-    const { data, labelFunction, onChange } = props;
+    const { idName, data, labelFunction, onChange } = props;
     const [checked, setChecked] = useState([]);
 
     useEffect(() => {
@@ -27,6 +27,7 @@ export default function CheckboxList(props) {
     }, [checked])
 
     const handleToggle = (value) => () => {
+        value = Number(value);
         const currentIndex = checked.indexOf(value);
         const newChecked = [...checked];
 
@@ -42,11 +43,11 @@ export default function CheckboxList(props) {
     return (
         <div>
             <List className={classes.root}>
-                {data.map(element => (
-                    <ListItem button onClick={handleToggle(element.id)} key={element.id}>
+                {data.map((element) => (
+                    <ListItem button onClick={handleToggle(element[idName])} key={element[[idName]]}>
                         <ListItemIcon>
                             <Checkbox
-                                checked={checked.indexOf(element.id) !== -1}
+                                checked={checked.indexOf(element[idName]) !== -1}
                                 tabIndex={-1}
                                 disableRipple
                             />

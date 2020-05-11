@@ -58,6 +58,7 @@ function AnkietaDodaj() {
 
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        console.log(params);
     };
 
     // const handleBack = () => {
@@ -67,6 +68,15 @@ function AnkietaDodaj() {
     const handleReset = () => {
         setActiveStep(0);
         setParams(defaultParams);
+    };
+
+    const handleSubmit = () => {
+        fetch('http://localhost:3001/dodajankiete/', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(params) })
+            .then(res => res.json())
+            .then(json => {
+                console.log(json)
+                handleReset();
+            });
     };
 
     const checkIfReadyForNext = () => {
@@ -107,7 +117,7 @@ function AnkietaDodaj() {
                 ) : (
                     <>
                         <Button color="secondary" onClick={handleReset}>Reset</Button>
-                        <Button variant="contained" color="primary" onClick={handleReset}>Wyślij</Button>
+                        <Button variant="contained" color="primary" onClick={handleSubmit}>Wyślij</Button>
                     </>
                 )}
             </Grid>

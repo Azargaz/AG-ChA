@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { Link } from 'react-router-dom';
 
@@ -10,23 +10,32 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import DataTable from '../../components/DataTable';
 
 function AnkietaDoWypelnienia() {
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [ankiety, setAnkiety] = useState([]);
 
-    const data = [
-        { id: "0", name: "Matematyka", prof: "Jan Kowalski" },
-        { id: "1", name: "Matematyka", prof: "Jan Kowalski" },
-        { id: "2", name: "Matematyka", prof: "Jan Kowalski" },
-    ]
+    useEffect(() => {
+        fetch('http://localhost:3001/ankieta/dowypelnienia/1')
+            .then(res => res.json())
+            .then(json => {
+                convertAnkiety(json);
+                setLoading(false);
+            })
+    }, [])
 
     const headers = ["ID", "Przedmiot", "Prowadzący", "Ankieta"];
     const button = (id) => (<Button variant="contained" color="primary" component={Link} to={"/student/panel/ankieta/" + id}>Wypełnij</Button>)
+
+    const convertAnkiety = ankiety => {
+        let newAnkiety = ankiety.map(ankieta => { return { id_ankieta: ankieta.id_ankieta, przedmiot: ankieta.nazwa, imie_nazwisko: ankieta.tytul + ' ' + ankieta.imie_nazwisko } })
+        setAnkiety(newAnkiety);
+    }
 
     return (
         <div>
             <Box m={3}>
                 <Typography align="center" variant="h4" margin={5}>Ankiety do wypełnienia</Typography>
             </Box>
-            { loading ? <CircularProgress /> : <DataTable headers={headers} data={data} button={button} />}
+            { loading ? <CircularProgress /> : <DataTable idName="id_ankieta" headers={headers} data={ankiety} button={button} />}
         </div>
     )
 }

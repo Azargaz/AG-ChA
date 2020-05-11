@@ -19,7 +19,7 @@ insert into student(pesel, nr_indeksu, imie, nazwisko, id_wydzial) values
     ('12345678987', '99999', 'Jan', 'Nowak', 1);
 
 insert into ankieta(id_prowadzacy, data_zamkniecia) values
-    (4, '2020-06-01');
+    (1, '2020-06-01');
 
 insert into ankieta_pytanie values 
     (1, 3),
@@ -28,14 +28,4 @@ insert into ankieta_pytanie values
     (4, 3);
 
 insert into student_ankieta values
-    (3, 1, false);
-
-SELECT sa.id_ankieta,pr.nazwa,p.tytul,p.imie_nazwisko 
-    FROM projekt.ankieta a JOIN projekt.student_ankieta sa 
-    on sa.id_ankieta = a.id_ankieta 
-    JOIN projekt.prowadzacy p 
-    on a.id_prowadzacy = p.id_prowadzacy 
-    JOIN projekt.przedmiot pr 
-    on pr.id_przedmiot = p.id_przedmiot 
-    where sa.id_student = $1 
-    and a.data_zamkniecia > NOW() order by pr.nazwa;
+    (1, 1, false);
