@@ -109,17 +109,23 @@ router.post('/', (req, res) => {
 	)
 		.then((result) => {
             console.log('INSERT 1 - ok');
-            const { id_ankieta } = result.rows[0];            
+			const { id_ankieta } = result.rows[0];            
+			
+			const insertQuestions = `INSERT INTO ankieta_pytanie VALUES (1, ${id_ankieta}), (2, ${id_ankieta}), (3, ${id_ankieta}), (4, ${id_ankieta})`;
 			const query = 'INSERT INTO projekt.student_ankieta VALUES ' + ankietaMultirowInsert(studenci, id_ankieta) + ';';
 			db.query(
 				query,
 				studenci
 			)
-				.then((result) => {
-                    console.log('INSERT 2 - ok');
-					res.status(201).json({
-						status: 'ok',
-					});
+				.then(() => {
+					console.log('INSERT 2 - ok');
+					db.query(insertQuestions)
+						.then(() => {
+							console.log('INSERT 3 - ok');
+							res.status(201).json({
+								status: 'ok',
+							});
+						})
 				})
 				.catch((err) => {
 					console.error(err);

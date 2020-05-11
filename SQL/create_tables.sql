@@ -118,7 +118,7 @@ CREATE TABLE student_grupa (
 CREATE TABLE student_ankieta (
                 id_ankieta NUMERIC NOT NULL,
                 id_student NUMERIC NOT NULL,
-                wypelnionia BOOLEAN NOT NULL default 'FALSE',
+                wypelniona BOOLEAN NOT NULL default 'FALSE',
                 CONSTRAINT student_ankieta_pk PRIMARY KEY (id_ankieta, id_student)
 );
 

@@ -1,7 +1,7 @@
-insert into pytanie values (1,true,'Czy zajęcia byłyy prowadzone w sposób ciekawy?');
-insert into pytanie values (2,true,'Czy sposób prowadzenia zajęć odbiegał od planu umieszonego na syllabusie przedmiotu?');
-insert into pytanie values (3,true,'w skali od jeden do 10 jak Pan/Pani ocenia zajęcia? Proszę podać liczbę');
-insert into pytanie values (4,true,'co było najciekawszą częścią przeprowadzonych laboratorium?');
+insert into pytanie values (1,false,'Czy zajęcia były prowadzone w sposób ciekawy?');
+insert into pytanie values (2,false,'Czy sposób prowadzenia zajęć był zgodny z planem umieszonym na syllabusie przedmiotu?');
+insert into pytanie values (3,false,'Czy prowadzący przestrzegał zasad zaliczenia przedstawionych na syllabusie?');
+insert into pytanie values (4,true,'Co było najciekawszą częścią przeprowadzonych laboratorium?');
 
 insert into wydzial(pelna_nazwa, nazwa_skrocona) values 
     ('Fizyki i Informatyki Stosowanej', 'FiIS');
@@ -22,10 +22,10 @@ insert into ankieta(id_prowadzacy, data_zamkniecia) values
     (1, '2020-06-01');
 
 insert into ankieta_pytanie values 
-    (1, 3),
-    (2, 3),
-    (3, 3),
-    (4, 3);
+    (1, 1),
+    (2, 1),
+    (3, 1),
+    (4, 1);
 
 insert into student_ankieta values
     (1, 1, false);

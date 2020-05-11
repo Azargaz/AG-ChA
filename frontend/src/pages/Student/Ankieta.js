@@ -1,28 +1,40 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+
 import QuestionsTable from '../../components/QuestionsTable';
+import history from '../../utils/history';
 
 function Ankieta(props) {
     const { id } = props.match.params;
 
-    const data = [
-        { id: "1", question: "Zajęcia były prowadzone zgodnie z sylabusem przedmiotu/modułu (np. kryteria oceniania, wymiar godzin, osiągnięte efekty kształcenia)." },
-        { id: "2", question: "Kryteria i zasady obliczania oceny końcowej lub zaliczenia zostały określone na pierwszych zajęciach." },
-        { id: "3", question: "Zajęcia były należycie przygotowane przez prowadzącego" },
-        { id: "4", question: "Osoba prowadząca zajęcia przekazywała wiadomości w sposób jasny  i zrozumiały" },
-        { id: "5", question: "Lorem ipsum" },
-        { id: "6", question: "Lorem ipsum" },
-        { id: "7", question: "Lorem ipsum" },
-        { id: "8", question: "Lorem ipsum" },
-        { id: "9", question: "Lorem ipsum" },
-    ]
+    const id_student = 1;
 
-    const open = [3, 4];    
     const headers = ["Nr", "Pytanie", "Odpowiedź"];
-
+    const [otwarte, setOtwarte] = useState([])
+    const [pytania, setPytania] = useState([])
     const [odpowiedzi, setOdpowiedzi] = useState([])
+
+    useEffect(() => {
+        fetch('http://localhost:3001/odpowiedzi/ankieta/' + id)
+            .then(res => res.json())
+            .then(json => {
+                convertPytania(json);
+            })
+    }, [])
+
+    const convertPytania = (pyt) => {
+        const otw = [];
+        pyt = pyt.map(pytanie => { 
+            const id = Number(pytanie.id_pytanie);
+            if(pytanie.pytanie_otwarte === true) otw.push(id);
+            return { id, tresc: pytanie.tresc_pyt }
+        })
+        setPytania(pyt);
+        setOtwarte(otw);
+    }
 
     const updateOdpowiedz = (id, odp) => {
         const index = odpowiedzi.findIndex((odpowiedz) => odpowiedz.id === Number(id));
@@ -41,12 +53,39 @@ function Ankieta(props) {
         }
     }
 
+    const handleSubmit = async () => {
+        for(let i = 0; i < odpowiedzi.length; i++) {
+            const odpowiedz = odpowiedzi[i];
+            const t = await fetch('http://localhost:3001/odpowiedzi/' + id, { 
+                method: 'POST', 
+                headers: { 'Content-Type': 'application/json' }, 
+                body: JSON.stringify({
+                    tresc: odpowiedz.odp,
+                    id_student,
+                    id_pytanie: odpowiedz.id
+                })
+            })
+
+            if(i === odpowiedzi.length-1) {
+                await fetch('http://localhost:3001/odpowiedzi/wypelniona/' + id, { 
+                    method: 'POST', 
+                    headers: { 'Content-Type': 'application/json' }, 
+                    body: JSON.stringify({
+                        id_student
+                    })
+                })
+                history.push("/student/panel/");
+            }
+        } 
+    }
+
     return (
         <div>
             <Box m={3}>
                 <Typography align="center" variant="h4" margin={5}>Wypełnij ankietę</Typography>
             </Box>
-            <QuestionsTable headers={headers} data={data} openQuestions={open} onUpdateAnswer={updateOdpowiedz} answers={odpowiedzi} />
+            <QuestionsTable headers={headers} data={pytania} openQuestions={otwarte} onUpdateAnswer={updateOdpowiedz} answers={odpowiedzi} />
+            <Button variant="contained" color="primary" onClick={handleSubmit} disabled={odpowiedzi.length < pytania.length}>Wyślij</Button>
         </div>
     )
 }

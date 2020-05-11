@@ -8,7 +8,7 @@ create or replace view student_wypelnil as
 		from student_ankieta sa
 			 join student s on sa.id_student = s.id_student
 			 join ankieta a on sa.id_ankieta = a.id_ankieta
-			 where sa.wypelnionia = 'True'
+			 where sa.wypelniona = 'True'
 
 
 );
@@ -21,7 +21,7 @@ create or replace view student_moze_wypelnic as
 		from student_ankieta sa
 			 join student s on sa.id_student = s.id_student
 			 join ankieta a on sa.id_ankieta = a.id_ankieta
-			 where sa.wypelnionia = 'FALSE'
+			 where sa.wypelniona = 'FALSE'
 
 );
 
