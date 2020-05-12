@@ -4,7 +4,7 @@ import { Route } from "react-router-dom";
 import Grid from '@material-ui/core/Grid';
 
 import Image from '../../components/Image';
-import LogoAGH from '../../img/logo_agh.jpg';
+import LogoAGH from '../../img/logo_agh_kolor.png';
 import ButtonList from '../../components/ButtonList';
 
 import AnkietaDoWypelnienia from './AnkietaDoWypelnienia';

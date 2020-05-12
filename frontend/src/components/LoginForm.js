@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import FormHelperText from '@material-ui/core/FormHelperText';
 
 const useStyles = makeStyles(theme => ({
     fullWidth: {
@@ -19,14 +20,14 @@ const useStyles = makeStyles(theme => ({
 
 function LoginForm(props) {
     const classes = useStyles();
-    const { fields, button, handleSubmit, handleChange, loading } = props;
-
+    const { fields, button, handleSubmit, handleChange, loading, errors } = props;
+    
     return (
         <form noValidate autoComplete="off">
             <Grid container direction="column" spacing={3}>
                 {fields.map(field => (
                     <Grid item key={field.name}>
-                        <TextField fullWidth name={field.name} type={field.type} label={field.label} variant="outlined" onChange={handleChange} />
+                        <TextField error={errors} fullWidth name={field.name} type={field.type} label={field.label} variant="outlined" onChange={handleChange} />
                     </Grid>
                 ))}
                 <Grid item>
@@ -36,6 +37,12 @@ function LoginForm(props) {
                         </Button>
                     </Grid>
                 </Grid>
+                {errors && 
+                <Grid item>
+                    <Grid container justify="center">
+                        <FormHelperText id="my-helper-text" error={true} filled={true}>Błędne dane logowania!</FormHelperText>
+                    </Grid>
+                </Grid>}
             </Grid>
         </form>
     )

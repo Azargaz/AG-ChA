@@ -1,20 +1,53 @@
 import React, { useState, useContext } from 'react'
 
 import { AuthContext } from '../../utils/auth';
+import history from '../../utils/history';
 import Grid from '@material-ui/core/Grid';
 
 import LoginForm from '../../components/LoginForm';
 import Image from '../../components/Image';
-import LogoAGH from '../../img/logo_agh.jpg';
+import LogoAGH from '../../img/logo_agh_kolor.png';
 
 function LoginStudent() {
-    const { authenticateStudent, setDecodedToken, setAuthenticated } = useContext(AuthContext);
-
+    const { setDecodedToken, getDecodedToken, setAuthenticated, setToken } = useContext(AuthContext);
+    const [authErrors, setAuthErrors] = useState(null);
     const [formData, setFormData] = useState({
         indeks: '',
         pesel: ''
     })
     const [loading, setLoading] = useState(false)
+
+    const authenticateStudent = () => {
+        const { indeks, pesel } = formData;
+        fetch('http://localhost:3001/users/studentlogin', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },        
+            body: JSON.stringify({
+                indeks,
+                pesel
+            })
+        })
+            .then(res => res.json())
+            .then(json => {
+                if(json.token) {
+                    setToken(json.token);
+                    const decodedToken = getDecodedToken();
+                    setAuthenticated(true);
+                    setDecodedToken(decodedToken);
+                    history.push("/student/panel")
+                }
+                else if(json.error) {
+                    setAuthErrors({
+                        ...authErrors,
+                        student: json.error
+                    })
+                }
+
+                setLoading(false);
+            })
+    }
 
     const handleChange = (event) => {
         setFormData({
@@ -24,10 +57,11 @@ function LoginStudent() {
     }
 
     const handleSubmit = () => {
-        setLoading(true);
-        authenticateStudent(formData, setDecodedToken, setAuthenticated, () => {
-            setLoading(false);
-        });
+        if(formData.indeks !== '' && formData.pesel !== '') {
+            setLoading(true);
+            authenticateStudent();
+            setAuthErrors(null);
+        }
     }
 
     return (
@@ -46,6 +80,7 @@ function LoginStudent() {
                     handleSubmit={handleSubmit}
                     handleChange={handleChange} 
                     loading={loading}
+                    errors={authErrors}
                 />
             </Grid>
         </Grid>

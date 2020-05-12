@@ -16,7 +16,7 @@ router.post('/pracowniklogin', (req, res) => {
 			if (result.rows.length > 0) {
 				result = result.rows[0];
 				const token = jwt.sign({id_pracownik: result.id_pracownik, pracownik: true}, process.env.PRIVATE_KEY)
-				res.status(201).json(token);
+				res.status(201).json({token});
 			} else {
 				res.status(500).json({
 					status: 'error',
@@ -46,7 +46,7 @@ router.post('/studentlogin', (req, res) => {
 			if (result.rows.length > 0) {
 				result = result.rows[0];
 				const token = jwt.sign({id_student: result.id_student, student: true}, process.env.PRIVATE_KEY)
-				res.status(201).json(token);
+				res.status(201).json({token});
 			} else {
 				res.status(500).json({
 					status: 'error',

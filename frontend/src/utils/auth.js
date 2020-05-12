@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from 'react'
+import React, { createContext, useContext, useState } from 'react'
 
 import jwtDecode from 'jwt-decode';
 import { Route, Redirect } from 'react-router-dom';
@@ -34,6 +34,7 @@ const PracownikRoute = ({ component: Component, ...rest }) => {
 
 const UnauthRoute = ({ component: Component, ...rest }) => {
     const { authenticated } = useContext(AuthContext);
+
     return (
         <Route
             {...rest}
@@ -73,52 +74,6 @@ const checkToken = () => {
 	return null;
 }
 
-const authenticatePracownik = (loginData, setDecodedToken, setAuthenticated, callback) => {
-    const { login, haslo } = loginData;
-    fetch('http://localhost:3001/users/pracowniklogin', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },        
-        body: JSON.stringify({
-            login,
-            haslo
-        })
-    })
-        .then(res => res.json())
-        .then(json => {
-            setToken(json);
-            const decodedToken = getDecodedToken();
-            setAuthenticated(true);
-            setDecodedToken(decodedToken);
-            callback();
-            history.push("/pracownik/panel")
-        })
-}
-
-const authenticateStudent = (loginData, setDecodedToken, setAuthenticated, callback) => {
-    const { indeks, pesel } = loginData;
-    fetch('http://localhost:3001/users/studentlogin', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },        
-        body: JSON.stringify({
-            indeks,
-            pesel
-        })
-    })
-        .then(res => res.json())
-        .then(json => {
-            setToken(json);
-            const decodedToken = getDecodedToken();
-            setAuthenticated(true);
-            setDecodedToken(decodedToken);
-            callback();
-            history.push("/student/panel")
-        })
-}
-
 const unauthenticate = (setDecodedToken, setAuthenticated) => {
     removeToken();
     setAuthenticated(false);
@@ -135,8 +90,6 @@ export {
     setToken,
     removeToken,
     checkToken,
-    authenticatePracownik,
-    authenticateStudent,
     unauthenticate,
     getDecodedToken
 };
