@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 
-import history from '../../utils/history';
+import { AuthContext } from '../../utils/auth';
 import Grid from '@material-ui/core/Grid';
 
 import LoginForm from '../../components/LoginForm';
@@ -8,6 +8,8 @@ import Image from '../../components/Image';
 import LogoAGH from '../../img/logo_agh.jpg';
 
 function LoginPracownik() {
+    const { authenticatePracownik, setDecodedToken, setAuthenticated } = useContext(AuthContext);
+
     const [formData, setFormData] = useState({
         login: '',
         haslo: ''
@@ -23,10 +25,9 @@ function LoginPracownik() {
 
     const handleSubmit = () => {
         setLoading(true);
-        setTimeout(() => {
-            history.push("/pracownik/panel/");
+        authenticatePracownik(formData, setDecodedToken, setAuthenticated, () => {
             setLoading(false);
-        }, 500)
+        });
     }
 
     return (

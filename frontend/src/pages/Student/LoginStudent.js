@@ -23,9 +23,7 @@ function LoginStudent() {
         })
     }
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        console.log(formData);
+    const handleSubmit = () => {
         setLoading(true);
         authenticateStudent(formData, setDecodedToken, setAuthenticated, () => {
             setLoading(false);

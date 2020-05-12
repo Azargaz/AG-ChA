@@ -111,7 +111,7 @@ router.post('/', (req, res) => {
             console.log('INSERT 1 - ok');
 			const { id_ankieta } = result.rows[0];            
 			
-			const insertQuestions = `INSERT INTO ankieta_pytanie VALUES (1, ${id_ankieta}), (2, ${id_ankieta}), (3, ${id_ankieta}), (4, ${id_ankieta})`;
+			const insertQuestions = `INSERT INTO projekt.ankieta_pytanie VALUES (1, ${id_ankieta}), (2, ${id_ankieta}), (3, ${id_ankieta}), (4, ${id_ankieta})`;
 			const query = 'INSERT INTO projekt.student_ankieta VALUES ' + ankietaMultirowInsert(studenci, id_ankieta) + ';';
 			db.query(
 				query,

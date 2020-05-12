@@ -58,7 +58,6 @@ function AnkietaDodaj() {
 
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
-        console.log(params);
     };
 
     // const handleBack = () => {

@@ -18,6 +18,9 @@ insert into prowadzacy(id_przedmiot, tytul, imie_nazwisko) values
 insert into student(pesel, nr_indeksu, imie, nazwisko, id_wydzial) values
     ('12345678987', '99999', 'Jan', 'Nowak', 1);
 
+insert into pracownik(login, haslo, email) values
+    ('admin', 'admin', 'admin@mail.com');
+
 insert into ankieta(id_prowadzacy, data_zamkniecia) values
     (1, '2020-06-01');
 
