@@ -10,9 +10,7 @@ import DataTable from '../../components/DataTable';
 
 function AnkietaWypelnione() {
     const data = [
-        { id: "0", name: "Matematyka", prof: "Jan Kowalski" },
-        { id: "1", name: "Matematyka", prof: "Jan Kowalski" },
-        { id: "2", name: "Matematyka", prof: "Jan Kowalski" },
+        { id: "0", name: "PRZEDMIOT", imie_nazwisko: "IMIE NAZWISKO" },
     ]
 
     const headers = ["ID", "Przedmiot", "Prowadzący", "Odpowiedzi"];

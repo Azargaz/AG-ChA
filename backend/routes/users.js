@@ -1,8 +1,10 @@
 const router = require('express').Router();
 const db = require('./polaczenie');
 
+const jwt = require('jsonwebtoken')
+
 //// logowanie pracownika
-router.get('/pracowniklogin', (req, res) => {
+router.post('/pracowniklogin', (req, res) => {
 	const { login } = req.body;
 	const { haslo } = req.body;
 
@@ -12,7 +14,9 @@ router.get('/pracowniklogin', (req, res) => {
 	)
 		.then((result) => {
 			if (result.rows.length > 0) {
-				res.status(201).json(result.rows[0]);
+				result = result.rows[0];
+				const token = jwt.sign({id_pracownik: result.id_pracownik, pracownik: true}, process.env.PRIVATE_KEY)
+				res.status(201).json(token);
 			} else {
 				res.status(500).json({
 					status: 'error',
@@ -30,7 +34,7 @@ router.get('/pracowniklogin', (req, res) => {
 });
 
 //// logowanie studenta
-router.get('/studentlogin', (req, res) => {
+router.post('/studentlogin', (req, res) => {
 	const { indeks } = req.body;
 	const { pesel } = req.body;
 
@@ -40,7 +44,9 @@ router.get('/studentlogin', (req, res) => {
 	)
 		.then((result) => {
 			if (result.rows.length > 0) {
-				res.status(201).json(result.rows[0]);
+				result = result.rows[0];
+				const token = jwt.sign({id_student: result.id_student, student: true}, process.env.PRIVATE_KEY)
+				res.status(201).json(token);
 			} else {
 				res.status(500).json({
 					status: 'error',

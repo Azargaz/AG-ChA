@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 
-import history from '../../utils/history';
+import { AuthContext } from '../../utils/auth';
 import Grid from '@material-ui/core/Grid';
 
 import LoginForm from '../../components/LoginForm';
@@ -8,9 +8,11 @@ import Image from '../../components/Image';
 import LogoAGH from '../../img/logo_agh.jpg';
 
 function LoginStudent() {
+    const { authenticateStudent, setDecodedToken, setAuthenticated } = useContext(AuthContext);
+
     const [formData, setFormData] = useState({
         indeks: '',
-        PESEL: ''
+        pesel: ''
     })
     const [loading, setLoading] = useState(false)
 
@@ -21,13 +23,13 @@ function LoginStudent() {
         })
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = (event) => {
+        event.preventDefault();
         console.log(formData);
         setLoading(true);
-        setTimeout(() => {
-            history.push("/student/panel/");
+        authenticateStudent(formData, setDecodedToken, setAuthenticated, () => {
             setLoading(false);
-        }, 500)
+        });
     }
 
     return (
@@ -37,7 +39,7 @@ function LoginStudent() {
                 <LoginForm 
                     fields={[
                         { name: "indeks", type: "text", label: "Numer indeksu" },
-                        { name: "PESEL", type: "password", label: "PESEL" }
+                        { name: "pesel", type: "password", label: "PESEL" }
                     ]}
                     button={{
                         color: "primary",

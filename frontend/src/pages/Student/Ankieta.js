@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
@@ -6,11 +6,13 @@ import Button from '@material-ui/core/Button';
 
 import QuestionsTable from '../../components/QuestionsTable';
 import history from '../../utils/history';
+import { AuthContext } from '../../utils/auth';
 
 function Ankieta(props) {
     const { id } = props.match.params;
-
-    const id_student = 1;
+    
+    const { decodedToken } = useContext(AuthContext);
+    const { id_student } = decodedToken;
 
     const headers = ["Nr", "Pytanie", "Odpowiedź"];
     const [otwarte, setOtwarte] = useState([])

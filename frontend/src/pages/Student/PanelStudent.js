@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Route } from "react-router-dom";
 
 import Grid from '@material-ui/core/Grid';
@@ -11,14 +11,21 @@ import AnkietaDoWypelnienia from './AnkietaDoWypelnienia';
 import AnkietaWypelnione from './AnkietaWypelnione';
 import Ankieta from './Ankieta';
 import AnkietaW from './AnkietaW';
+import { AuthContext } from '../../utils/auth';
 
 function Panel() {
+    const { unauthenticate, setDecodedToken, setAuthenticated } = useContext(AuthContext);
+
+    const logout = () => {
+        unauthenticate(setDecodedToken, setAuthenticated);
+    }
+
     return (
         <Grid container justify="center" alignItems="center" spacing={3}>
             <ButtonList buttons={[
                 { text: "Zobacz wypełnione ankiety", color: "primary", link: "/student/panel/poprzednie_ankiety" },
                 { text: "Zobacz ankiety do wypełnienia", color: "primary", link: "/student/panel/ankiety" },
-                { text: "Wyloguj", color: "secondary", link: "/" }
+                { text: "Wyloguj", color: "secondary", link: "/", handleClick: logout }
             ]}/>
         </Grid>
     )

@@ -11,7 +11,7 @@ function ButtonList(props) {
         <Grid container justify="center" alignItems="center" spacing={4}>
             {buttons.map((button, index) => (
                 <Grid item xs={8} key={index}>
-                    <Button fullWidth variant="contained" component={Link} color={button.color} to={button.link}>{button.text}</Button>
+                    <Button fullWidth variant="contained" component={Link} color={button.color} to={button.link} onClick={button.handleClick}>{button.text}</Button>
                 </Grid>
             ))}
         </Grid>
