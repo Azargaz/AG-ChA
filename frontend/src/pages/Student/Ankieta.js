@@ -23,11 +23,11 @@ function Ankieta(props) {
         fetch('http://localhost:3001/odpowiedzi/ankieta/' + id)
             .then(res => res.json())
             .then(json => {
-                convertPytania(json);
+                getPytania(json);
             })
     }, [])
 
-    const convertPytania = (pyt) => {
+    const getPytania = (pyt) => {
         const otw = [];
         pyt = pyt.map(pytanie => { 
             const id = Number(pytanie.id_pytanie);

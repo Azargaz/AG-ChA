@@ -47,7 +47,7 @@ export default function CheckboxList(props) {
                     <ListItem button onClick={handleToggle(element[idName])} key={element[[idName]]}>
                         <ListItemIcon>
                             <Checkbox
-                                checked={checked.indexOf(element[idName]) !== -1}
+                                checked={checked.indexOf(Number(element[idName])) !== -1}
                                 tabIndex={-1}
                                 disableRipple
                             />
