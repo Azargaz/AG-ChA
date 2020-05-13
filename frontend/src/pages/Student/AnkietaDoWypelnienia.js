@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../utils/auth';
 
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -10,11 +11,12 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import DataTable from '../../components/DataTable';
 
 function AnkietaDoWypelnienia() {
+    const { decodedToken } = useContext(AuthContext);
     const [loading, setLoading] = useState(true);
     const [ankiety, setAnkiety] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:3001/ankieta/dowypelnienia/1')
+        fetch('http://localhost:3001/ankieta/dowypelnienia/' + decodedToken.id_student)
             .then(res => res.json())
             .then(json => {
                 convertAnkiety(json);
