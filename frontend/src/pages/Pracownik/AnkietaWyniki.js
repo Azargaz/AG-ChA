@@ -1,21 +1,33 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { Link } from 'react-router-dom';
 
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import DataTable from '../../components/DataTable';
 
 function AnkietaWyniki() {
-    const data = [
-        { id: "0", wydzial: "WFiIS", kierunek: "Fizyka Techniczna", przedmiot: "Matematyka", prowadzacy: "Jan Kowalski", zamknieta: "X" },
-        { id: "1", wydzial: "WFiIS", kierunek: "Fizyka Techniczna", przedmiot: "Matematyka", prowadzacy: "Jan Kowalski", zamknieta: "" },
-        { id: "2", wydzial: "WFiIS", kierunek: "Fizyka Techniczna", przedmiot: "Matematyka", prowadzacy: "Jan Kowalski", zamknieta: "X" },
-    ]
+    const [ankiety, setAnkiety] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-    const headers = ["ID", "Wydział", "Kierunek", "Przedmiot", "Prowadzący", "Zamknięta", "Wyniki"];
+    useEffect(() => {
+        fetch('http://localhost:3001/wyniki/')
+            .then(res => res.json())
+            .then(json => {
+                convertAnkiety(json);
+                setLoading(false);
+            })
+    }, [])
+
+    const convertAnkiety = ankiety => {
+        let newAnkiety = ankiety.map(ankieta => { return { id_ankieta: ankieta.id_ankieta, pelna_nazwa: ankieta.pelna_nazwa, nazwa: ankieta.nazwa, imie_nazwisko:   ankieta.imie + ' ' + ankieta.nazwisko } })
+        setAnkiety(newAnkiety);
+    }
+
+    const headers = ["ID", "Kierunek", "Przedmiot", "Prowadzący", "Wyniki"];
     const button = (id) => <Button variant="contained" color="primary" component={Link} to={"/pracownik/panel/wyniki/"+id}>Sprawdź</Button>;
 
     return (
@@ -23,7 +35,7 @@ function AnkietaWyniki() {
             <Box m={3}>
                 <Typography align="center" variant="h4" margin={5}>Ankiety</Typography>
             </Box>
-            <DataTable headers={headers} data={data} button={button} />
+            { loading ? <CircularProgress /> : <DataTable idName="id_ankieta" headers={headers} data={ankiety} button={button} />}
         </div>
     )
 }

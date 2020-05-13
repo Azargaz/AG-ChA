@@ -127,13 +127,6 @@ router.post('/', (req, res) => {
 							});
 						})
 				})
-				.catch((err) => {
-					console.error(err);
-					res.status(500).json({
-						status: 'error',
-						error: err.message,
-					});
-				});
 		})
 		.catch((err) => {
 			console.error(err);
