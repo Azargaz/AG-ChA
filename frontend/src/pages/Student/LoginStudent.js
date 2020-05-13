@@ -31,6 +31,8 @@ function LoginStudent() {
         })
             .then(res => res.json())
             .then(json => {
+                setLoading(false);
+                
                 if(json.token) {
                     setToken(json.token);
                     const decodedToken = getDecodedToken();
@@ -44,8 +46,6 @@ function LoginStudent() {
                         student: json.error
                     })
                 }
-
-                setLoading(false);
             })
     }
 
@@ -59,8 +59,8 @@ function LoginStudent() {
     const handleSubmit = () => {
         if(formData.indeks !== '' && formData.pesel !== '') {
             setLoading(true);
-            authenticateStudent();
             setAuthErrors(null);
+            authenticateStudent();
         }
     }
 
@@ -80,7 +80,7 @@ function LoginStudent() {
                     handleSubmit={handleSubmit}
                     handleChange={handleChange} 
                     loading={loading}
-                    errors={authErrors}
+                    errors={authErrors ? true : false}
                 />
             </Grid>
         </Grid>

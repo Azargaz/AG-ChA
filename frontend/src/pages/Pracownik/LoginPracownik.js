@@ -31,6 +31,8 @@ function LoginPracownik() {
         })
             .then(res => res.json())
             .then(json => {
+                setLoading(false);
+
                 if(json.token) {
                     setToken(json.token);
                     const decodedToken = getDecodedToken();
@@ -44,8 +46,6 @@ function LoginPracownik() {
                         pracownik: json.error
                     })
                 }
-
-                setLoading(false);
             })
     }
 
@@ -59,8 +59,8 @@ function LoginPracownik() {
     const handleSubmit = () => {
         if(formData.login !== '' && formData.haslo !== '') {
             setLoading(true);
-            authenticatePracownik();
             setAuthErrors(null);
+            authenticatePracownik();
         }
     }
 
@@ -80,7 +80,7 @@ function LoginPracownik() {
                     handleSubmit={handleSubmit}
                     handleChange={handleChange} 
                     loading={loading}
-                    errors={authErrors}
+                    errors={authErrors ? true : false}
                 />
             </Grid>
         </Grid>
