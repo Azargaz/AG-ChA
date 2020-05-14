@@ -7,6 +7,7 @@ DB_USER_PASS='hasło_użytkownika'
 DB_HOST='localhost'
 DB_PORT='5432'
 DB_NAME='projekt_io'
+PRIVATE_KEY='wpisz tutaj co chcesz'
 ```
 
 Uruchamianie serwera:
