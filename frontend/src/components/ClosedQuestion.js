@@ -25,7 +25,7 @@ const RedRadio = withStyles({
 })(React.forwardRef((props, ref) => <Radio color="default" {...props} innerRef={ref} />));
 
 function ClosedQuestion(props) {
-    const { id, onUpdateAnswer, answer } = props;
+    const { id, onUpdateAnswer, answer, disabled } = props;
 
     const handleChange = (event) => {
         onUpdateAnswer(id, event.target.value);
@@ -39,6 +39,7 @@ function ClosedQuestion(props) {
                 onChange={handleChange}
                 value="Nie"
                 name="radio-button-demo"
+                disabled={disabled}
             />
         </Tooltip>
         <Tooltip title="Raczej nie">
@@ -47,6 +48,7 @@ function ClosedQuestion(props) {
                 onChange={handleChange}
                 value="Raczej nie"
                 name="radio-button-demo"
+                disabled={disabled}
             />
         </Tooltip>
         <Tooltip title="Nie mam zdania">
@@ -55,6 +57,7 @@ function ClosedQuestion(props) {
                 onChange={handleChange}
                 value="Nie mam zdania"
                 name="radio-button-demo"
+                disabled={disabled}
             />
         </Tooltip>
         <Tooltip title="Raczej tak">
@@ -63,6 +66,7 @@ function ClosedQuestion(props) {
                 onChange={handleChange}
                 value="Raczej tak"
                 name="radio-button-demo"
+                disabled={disabled}
             />
         </Tooltip>
         <Tooltip title="Tak">
@@ -71,6 +75,7 @@ function ClosedQuestion(props) {
                 onChange={handleChange}
                 value="Tak"
                 name="radio-button-demo"
+                disabled={disabled}
             />
         </Tooltip>
       </div>

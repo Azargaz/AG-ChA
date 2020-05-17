@@ -86,7 +86,7 @@ function Ankieta(props) {
             <Box m={3}>
                 <Typography align="center" variant="h4" margin={5}>Wypełnij ankietę</Typography>
             </Box>
-            <QuestionsTable headers={headers} data={pytania} openQuestions={otwarte} onUpdateAnswer={updateOdpowiedz} answers={odpowiedzi} />
+            <QuestionsTable headers={headers} data={pytania} openQuestions={otwarte} onUpdateAnswer={updateOdpowiedz} answers={odpowiedzi} disabled={false} />
             <Button variant="contained" color="primary" onClick={handleSubmit} disabled={odpowiedzi.length < pytania.length}>Wyślij</Button>
         </div>
     )
