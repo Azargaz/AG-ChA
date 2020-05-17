@@ -9,6 +9,7 @@ import ButtonList from '../../components/ButtonList';
 
 import AnkietaDodaj from './AnkietaDodaj';
 import AnkietaWyniki from './AnkietaWyniki';
+import AnkietaWynik from './AnkietaWynik';
 import AnkietaProwadzacy from './AnkietaProwadzacy';
 import RankingProwadzacy from './RankingProwadzacy';
 import { AuthContext } from '../../utils/auth';
@@ -44,6 +45,7 @@ function PanelPracownik(props) {
                 <Route exact path={'/pracownik/panel/'} component={Panel} />
                 <Route path={'/pracownik/panel/dodaj_ankiete'} component={AnkietaDodaj} />
                 <Route path={'/pracownik/panel/wyniki'} component={AnkietaWyniki} />
+                <Route path={'/pracownik/panel/wynik/:id_ankieta'} component={AnkietaWynik} />
                 <Route path={'/pracownik/panel/porownaj_prowadzacych'} component={AnkietaProwadzacy} />
                 <Route path={'/pracownik/panel/ranking'} component={RankingProwadzacy} />
             </Grid>

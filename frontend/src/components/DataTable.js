@@ -29,9 +29,10 @@ function DataTable(props) {
                             {row[key]}
                         </TableCell>
                     ))}
+                    {button && 
                     <TableCell align="right">
                         {button(row[idName])}
-                    </TableCell>
+                    </TableCell>}
                 </TableRow>
                 ))}
             </TableBody>
