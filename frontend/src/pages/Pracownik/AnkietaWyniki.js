@@ -23,12 +23,12 @@ function AnkietaWyniki() {
     }, [])
 
     const convertAnkiety = ankiety => {
-        let newAnkiety = ankiety.map(ankieta => { return { id_ankieta: ankieta.id_ankieta, pelna_nazwa: ankieta.pelna_nazwa, nazwa: ankieta.nazwa, imie_nazwisko:   ankieta.imie + ' ' + ankieta.nazwisko } })
+        let newAnkiety = ankiety.map(ankieta => { return { id_ankieta: ankieta.id_ankieta, pelna_nazwa: ankieta.pelna_nazwa, nazwa: ankieta.nazwa, imie_nazwisko: ankieta.imie_nazwisko } })
         setAnkiety(newAnkiety);
     }
 
     const headers = ["ID", "Kierunek", "Przedmiot", "Prowadzący", "Wyniki"];
-    const button = (id) => <Button variant="contained" color="primary" component={Link} to={"/pracownik/panel/wyniki/"+id}>Sprawdź</Button>;
+    const button = (id) => <Button variant="contained" color="primary" component={Link} to={"/pracownik/panel/wynik/"+id}>Sprawdź</Button>;
 
     return (
         <div>

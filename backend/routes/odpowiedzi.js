@@ -66,4 +66,21 @@ router.get('/ankieta/:id_ankieta', (req, res) => {
 		});
 });
 
+// pobranie odpowiedzi ankiety
+router.get('/:id_ankieta/:id_student', (req, res) => {
+	const { id_ankieta, id_student } = req.params;
+
+	db.query('SELECT * FROM projekt.odpowiedz o WHERE o.id_ankieta=$1 AND o.id_student=$2', [id_ankieta, id_student])
+		.then((result) => {
+			res.status(201).json(result.rows);
+		})
+		.catch((err) => {
+			console.error(err);
+			res.status(500).json({
+				status: 'error',
+				error: err.message,
+			});
+		});
+});
+
 module.exports = router;

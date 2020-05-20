@@ -15,7 +15,7 @@ function QuestionsTable(props) {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(1);
 
-    const { headers, data, openQuestions, onUpdateAnswer, answers } = props;
+    const { headers, data, openQuestions, onUpdateAnswer, answers, disabled } = props;
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -57,9 +57,9 @@ function QuestionsTable(props) {
                             ))}
                             <TableCell align="center" style={{"whiteSpace": 'nowrap'}}>
                                 {openQuestions.includes(Number(row["id"])) ? (
-                                    <OpenQuestion id={row["id"]} onUpdateAnswer={onUpdateAnswer} answer={getAnswer(row["id"])} /> 
+                                    <OpenQuestion id={row["id"]} onUpdateAnswer={onUpdateAnswer} answer={getAnswer(row["id"])} disabled={disabled} /> 
                                 ) : (
-                                    <ClosedQuestion id={row["id"]} onUpdateAnswer={onUpdateAnswer} answer={getAnswer(row["id"])} />
+                                    <ClosedQuestion id={row["id"]} onUpdateAnswer={onUpdateAnswer} answer={getAnswer(row["id"])} disabled={disabled} />
                                 )}
                             </TableCell>
                         </TableRow>
