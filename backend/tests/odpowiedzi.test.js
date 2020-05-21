@@ -25,7 +25,7 @@ it('Already exist', function(done) {
   });
 
   app.use('/odpowiedzi', odpowiedziRouter);
-it('Select questionnaire', function(done) {
+it('Select questionnaire of student', function(done) {
     request(app)
       .get('/odpowiedzi/ankieta/1')
       .type('form')
@@ -55,7 +55,7 @@ it('Select questionnaire that not exists', function(done) {
   });
 
   app.use('/odpowiedzi', odpowiedziRouter);
-  it('Select questionnaire', function(done) {
+  it('Select questionnaire of user', function(done) {
     // const originalError = console.error;
     // console.error = jest.fn();
       request(app)

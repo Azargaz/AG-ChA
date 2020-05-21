@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "npx nodemon app.js",
-    "test": "jest --coverage --runInBand --detectOpenHandles"
+    "test": "jest --verbose --runInBand --detectOpenHandles"
   },
   "dependencies": {
     "cors": "^2.8.5",

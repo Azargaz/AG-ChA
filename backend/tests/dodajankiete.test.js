@@ -51,7 +51,7 @@ it('Select course', function(done) {
     });
 
     app.use('/dodajankiete', dodajAnkieteRouter);
-    it('Select professor', function(done) {
+    it('Select professor lecturing chosen subject', function(done) {
         request(app)
           .get('/dodajankiete/prowadzacy/1/1/1')
           .type('form')
