@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const db = require('./polaczenie');
-
+const functions = require("../functions")
 ////wybor wydzialu
 router.get('/wydzial', (req, res) => {
 	db.query('select id_wydzial, nazwa_skrocona from projekt.wydzial')
@@ -112,7 +112,8 @@ router.post('/', (req, res) => {
 			const { id_ankieta } = result.rows[0];            
 			
 			const insertQuestions = `INSERT INTO projekt.ankieta_pytanie VALUES (1, ${id_ankieta}), (2, ${id_ankieta}), (3, ${id_ankieta}), (4, ${id_ankieta})`;
-			const query = 'INSERT INTO projekt.student_ankieta VALUES ' + ankietaMultirowInsert(studenci, id_ankieta) + ';';
+			const query = 'INSERT INTO projekt.student_ankieta VALUES ' + functions.ankietaMultirowInsert(studenci, id_ankieta) + ';';
+			console.log(functions.ankietaMultirowInsert(studenci, id_ankieta));
 			db.query(
 				query,
 				studenci
@@ -136,10 +137,5 @@ router.post('/', (req, res) => {
 			});
 		});
 });
-
-const ankietaMultirowInsert = (rows, id_ankieta) => {
-	rows = rows.map((row, index) => `(${id_ankieta}, $${index+1}, false)`);
-	return rows.join();
-};
 
 module.exports = router;
