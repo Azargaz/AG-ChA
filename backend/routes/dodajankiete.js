@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const db = require('./polaczenie');
 const functions = require("../functions")
+
 ////wybor wydzialu
 router.get('/wydzial', (req, res) => {
 	db.query('select id_wydzial, nazwa_skrocona from projekt.wydzial')
@@ -102,7 +103,7 @@ router.get('/studenci/:wydzial', (req, res) => {
 ////dodawanie ankiety
 router.post('/', (req, res) => {
 	const { id_prowadzacy, data, studenci } = req.body;
-
+	console.log(studenci);
 	db.query(
 		'INSERT INTO projekt.ankieta(id_prowadzacy, data_zamkniecia) VALUES ($1, $2) RETURNING ankieta.id_ankieta',
 		[id_prowadzacy, data]
@@ -123,8 +124,14 @@ router.post('/', (req, res) => {
 					db.query(insertQuestions)
 						.then(() => {
 							console.log('INSERT 3 - ok');
-							res.status(201).json({
-								status: 'ok',
+							db.query('select s.mail from projekt.student s where s.id_student IN (' + studentMultirowSelect(studenci) + ');'
+							)
+								.then((mails) => {
+									console.log(mails.rows);
+									functions.sendMail(mails.rows);
+									res.status(201).json({
+										status: 'ok',
+									})
 							});
 						})
 				})
@@ -137,5 +144,17 @@ router.post('/', (req, res) => {
 			});
 		});
 });
+
+const ankietaMultirowInsert = (rows, id_ankieta) => {
+	rows = rows.map((row, index) => `(${id_ankieta}, $${index+1}, false)`);
+	return rows.join();
+};
+
+const studentMultirowSelect = (studenci) => {
+	ids = studenci.map((id) => `${id}`);
+	console.log("ids = " + ids);
+
+	return ids;
+};
 
 module.exports = router;

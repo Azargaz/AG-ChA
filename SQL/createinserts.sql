@@ -15,8 +15,8 @@ insert into przedmiot(id_kierunek, nazwa) values
 insert into prowadzacy(id_przedmiot, tytul, imie_nazwisko) values 
     (1, 'dr', 'Jan Kowalski');
 
-insert into student(pesel, nr_indeksu, imie, nazwisko, id_wydzial) values
-    ('12345678987', '99999', 'Jan', 'Nowak', 1);
+insert into student(pesel,mail, nr_indeksu, imie, nazwisko, id_wydzial) values
+    ('12345678987','dominik.trybuch@gmail.com', '99999', 'Jan', 'Nowak', 1);
 
 insert into pracownik(login, haslo, email) values
     ('admin', 'admin', 'admin@mail.com');
