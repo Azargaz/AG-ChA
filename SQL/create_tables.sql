@@ -98,6 +98,7 @@ CREATE SEQUENCE student_id_student_seq;
 CREATE TABLE student (
                 id_student NUMERIC NOT NULL DEFAULT nextval('student_id_student_seq'),
                 pesel VARCHAR NOT NULL,
+                mail VARCHAR NOT NULL,
                 nr_indeksu VARCHAR NOT NULL,
                 imie VARCHAR NOT NULL,
                 nazwisko VARCHAR NOT NULL,
