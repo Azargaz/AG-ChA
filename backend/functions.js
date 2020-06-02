@@ -5,6 +5,36 @@ const ankietaMultirowInsert = (rows, id_ankieta) => {
 	return rows.join();
 };
 
+
+function betterResult(id_prof1, score1, id_prof2, score2 ){	
+	if(score1 > score2){
+		return id_prof1;
+	} else if(score2 > score1){
+		return id_prof2;
+	}else{
+		return 0;
+	}
+}
+function chooseBetterProf(id_prof1, allResults1, id_prof2, allResults2){
+	sum1 = 0;
+	sum2 = 0
+
+	for(i =0; i <allResults1.length; ++i){
+		sum1 += parseInt(allResults1[i])
+		sum2 += parseInt(allResults2[i])
+	}
+
+	if(sum1 > sum2){
+		return id_prof1;
+	} else if(sum2 > sum1){
+		return id_prof2;
+	}else{
+		return 0;
+	}
+ 
+}
+
+
 async function sendMail(emails){
 	newmail = emails.map((email) => `${email['mail']}`);
 	console.log(newmail);
@@ -35,4 +65,6 @@ async function sendMail(emails){
 	// Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
 }
 exports.ankietaMultirowInsert = ankietaMultirowInsert;
+exports.betterResult = betterResult;
 exports.sendMail = sendMail;
+exports.chooseBetterProf = chooseBetterProf
