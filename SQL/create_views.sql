@@ -40,7 +40,12 @@ join  przedmiot p on pr.id_przedmiot = p.id_przedmiot
 
 
 create or replace view odpowiedzi_do_ankiety as (
-	select o.id_ankieta, o.id_pytanie, o.tresc_odp, COUNT(o.id_student) from odpowiedz o join pytanie p on o.id_pytanie = p.id_pytanie where p.pytanie_otwarte=false group by o.id_ankieta, o.id_pytanie, p.pytanie_otwarte, o.tresc_odp
+	select o.id_ankieta, o.id_pytanie, pr.tytul, pr.imie_nazwisko, o.tresc_odp, COUNT(o.id_student) from odpowiedz o 
+	join pytanie p on o.id_pytanie = p.id_pytanie 
+	join ankieta a on a.id_ankieta = o.id_pytanie
+	join prowadzacy pr on pr.id_prowadzacy = a.id_prowadzacy
+	where p.pytanie_otwarte=false 
+	group by o.id_ankieta, o.id_pytanie, p.pytanie_otwarte, o.tresc_odp, pr.tytul, pr.imie_nazwisko
 );
 
 -- create or replace function odpowiedzi_do_ankiety (id_stud integer,id_ank integer)
