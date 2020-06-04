@@ -1,0 +1,44 @@
+version: '3.7'
+
+services:
+  db:
+    image: postgres
+    container_name: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    build:
+      context: .
+      dockerfile: ./Dockerfile.db
+
+  server:
+    container_name: server
+    build: ./backend
+    depends_on: 
+      - db
+    expose: 
+      - 3001
+    ports:
+      - 3001:3001
+    command: npm start
+    environment:
+      DB_USER : postgres
+      DB_USER_PASS : postgres
+      DB_HOST : postgres
+      DB_PORT : 5432
+      DB_NAME : postgres
+      PRIVATE_KEY : cokolwiek
+
+  react:
+    container_name: react
+    build: ./frontend
+    expose:
+      - 3000
+    depends_on: 
+      - server
+    ports:
+      - 3000:3000
+    stdin_open: true
+    command: npm start
+
