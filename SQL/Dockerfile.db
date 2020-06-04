@@ -1,4 +1,3 @@
 FROM postgres
 
-FROM SQL/postgres
 COPY . /docker-entrypoint-initdb.d/

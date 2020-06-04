@@ -10,7 +10,7 @@ services:
       POSTGRES_DB: postgres
     build:
       context: .
-      dockerfile: ./Dockerfile.db
+      dockerfile: ./SQL/Dockerfile.db
 
   server:
     container_name: server
