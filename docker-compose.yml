@@ -1,34 +1,34 @@
 version: '3.7'
 
 services:
-  db:
-    image: postgres
-    container_name: postgres
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: postgres
-    build:
-      context: .
-      dockerfile: ./SQL/Dockerfile.db
+  # db:
+  #   image: postgres
+  #   container_name: postgres
+  #   environment:
+  #     POSTGRES_USER: postgres
+  #     POSTGRES_PASSWORD: postgres
+  #     POSTGRES_DB: postgres
+  #   build:
+  #     context: .
+  #     dockerfile: ./SQL/Dockerfile.db
 
   server:
     container_name: server
     build: ./backend
-    depends_on: 
-      - db
+    # depends_on: 
+    #   - db
     expose: 
       - 3001
     ports:
       - 3001:3001
     command: npm start
     environment:
-      DB_USER : postgres
-      DB_USER_PASS : postgres
-      DB_HOST : postgres
-      DB_PORT : 5432
-      DB_NAME : postgres
-      PRIVATE_KEY : cokolwiek
+      DB_USER : 'zgjslmfj'
+      DB_USER_PASS : 'yZw5h0WFVHT3QRHmMxSnznZuxERqPoYG'
+      DB_HOST : 'packy.db.elephantsql.com'
+      DB_PORT : '5432'
+      DB_NAME : 'zgjslmfj'
+      PRIVATE_KEY : 'cokolwiek'
 
   react:
     container_name: react
