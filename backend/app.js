@@ -30,7 +30,7 @@ app.use('/odpowiedzi', odpowiedziRouter);
 
 // App listening on port
 app.listen(port, () =>
-	console.log(`Example app listening at http://localhost:${port}`)
+	console.log(`Example app listening at http://http://3.95.32.80:${port}`)
 );
 
 module.exports = app;

@@ -15,7 +15,7 @@ function AnkietaWynik(props) {
     const [odpowiedzi, setOdpowiedzi] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:3001/wyniki/odpowiedzi/' + id_ankieta)
+        fetch('http://http://3.95.32.80:3001/wyniki/odpowiedzi/' + id_ankieta)
             .then(res => res.json())
             .then(json => {
                 getOdpowiedzi(json);

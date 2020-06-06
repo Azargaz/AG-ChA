@@ -70,7 +70,7 @@ function AnkietaDodaj() {
     };
 
     const handleSubmit = () => {
-        fetch('http://localhost:3001/dodajankiete/', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(params) })
+        fetch('http://http://3.95.32.80:3001/dodajankiete/', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(params) })
             .then(res => res.json())
             .then(json => {
                 console.log(json)

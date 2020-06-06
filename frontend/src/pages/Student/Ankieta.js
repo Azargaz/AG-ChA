@@ -20,7 +20,7 @@ function Ankieta(props) {
     const [odpowiedzi, setOdpowiedzi] = useState([])
 
     useEffect(() => {
-        fetch('http://localhost:3001/odpowiedzi/ankieta/' + id)
+        fetch('http://http://3.95.32.80:3001/odpowiedzi/ankieta/' + id)
             .then(res => res.json())
             .then(json => {
                 getPytania(json);
@@ -58,7 +58,7 @@ function Ankieta(props) {
     const handleSubmit = async () => {
         for(let i = 0; i < odpowiedzi.length; i++) {
             const odpowiedz = odpowiedzi[i];
-            const t = await fetch('http://localhost:3001/odpowiedzi/' + id, { 
+            const t = await fetch('http://http://3.95.32.80:3001/odpowiedzi/' + id, { 
                 method: 'POST', 
                 headers: { 'Content-Type': 'application/json' }, 
                 body: JSON.stringify({
@@ -69,7 +69,7 @@ function Ankieta(props) {
             })
 
             if(i === odpowiedzi.length-1) {
-                await fetch('http://localhost:3001/odpowiedzi/wypelniona/' + id, { 
+                await fetch('http://http://3.95.32.80:3001/odpowiedzi/wypelniona/' + id, { 
                     method: 'POST', 
                     headers: { 'Content-Type': 'application/json' }, 
                     body: JSON.stringify({

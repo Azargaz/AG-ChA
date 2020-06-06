@@ -19,7 +19,7 @@ function LoginPracownik() {
 
     const authenticatePracownik = () => {
         const { login, haslo } = formData;
-        fetch('http://localhost:3001/users/pracowniklogin', {
+        fetch('http://http://3.95.32.80:3001/users/pracowniklogin', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

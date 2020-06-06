@@ -10,7 +10,7 @@ function WyborStudentow(props) {
 
     useEffect(() => {
         async function fetchStudenci() {
-            let response = await fetch('http://localhost:3001/dodajankiete/studenci/' + params.id_wydzial);
+            let response = await fetch('http://http://3.95.32.80:3001/dodajankiete/studenci/' + params.id_wydzial);
             response.json().then(json => setStudenci(json));
         }
 
