@@ -16,7 +16,7 @@ function AnkietaDoWypelnienia() {
     const [ankiety, setAnkiety] = useState([]);
 
     useEffect(() => {
-        fetch('http://http://3.95.32.80:3001/ankieta/dowypelnienia/' + decodedToken.id_student)
+        fetch('http://3.95.32.80:3001/ankieta/dowypelnienia/' + decodedToken.id_student)
             .then(res => res.json())
             .then(json => {
                 convertAnkiety(json);

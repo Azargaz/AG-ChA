@@ -14,7 +14,7 @@ function AnkietaWyniki() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch('http://http://3.95.32.80:3001/wyniki/')
+        fetch('http://3.95.32.80:3001/wyniki/')
             .then(res => res.json())
             .then(json => {
                 convertAnkiety(json);

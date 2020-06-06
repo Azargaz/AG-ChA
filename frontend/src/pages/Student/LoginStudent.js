@@ -19,7 +19,7 @@ function LoginStudent() {
 
     const authenticateStudent = () => {
         const { indeks, pesel } = formData;
-        fetch('http://http://3.95.32.80:3001/users/studentlogin', {
+        fetch('http://3.95.32.80:3001/users/studentlogin', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

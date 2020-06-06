@@ -20,12 +20,12 @@ function AnkietaW(props) {
     const [odpowiedzi, setOdpowiedzi] = useState([])
 
     useEffect(() => {
-        fetch('http://http://3.95.32.80:3001/odpowiedzi/ankieta/' + id)
+        fetch('http://3.95.32.80:3001/odpowiedzi/ankieta/' + id)
             .then(res => res.json())
             .then(json => {
                 getPytania(json);
             })
-        fetch('http://http://3.95.32.80:3001/odpowiedzi/' + id + '/' + id_student)
+        fetch('http://3.95.32.80:3001/odpowiedzi/' + id + '/' + id_student)
             .then(res => res.json())
             .then(json => {
                 getOdpowiedzi(json);

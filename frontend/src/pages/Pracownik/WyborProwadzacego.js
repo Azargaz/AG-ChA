@@ -9,19 +9,19 @@ function WyborProwadzacego(props) {
 
     useEffect(() => {
         async function fetchWydzialy() {
-            let response = await fetch('http://http://3.95.32.80:3001/dodajankiete/wydzial');
+            let response = await fetch('http://3.95.32.80:3001/dodajankiete/wydzial');
             response.json().then(json => setWydzialy(json));
         }
         async function fetchKierunki() {
-            let response = await fetch('http://http://3.95.32.80:3001/dodajankiete/kierunek/' + params.id_wydzial);
+            let response = await fetch('http://3.95.32.80:3001/dodajankiete/kierunek/' + params.id_wydzial);
             response.json().then(json => setKierunki(json));
         }
         async function fetchPrzedmioty() {
-            let response = await fetch(`http://http://3.95.32.80:3001/dodajankiete/przedmiot/${params.id_wydzial}/${params.id_kierunek}`);
+            let response = await fetch(`http://3.95.32.80:3001/dodajankiete/przedmiot/${params.id_wydzial}/${params.id_kierunek}`);
             response.json().then(json => setPrzedmioty(json));
         }
         async function fetchProwadzacy() {
-            let response = await fetch(`http://http://3.95.32.80:3001/dodajankiete/prowadzacy/${params.id_wydzial}/${params.id_kierunek}/${params.id_przedmiot}`);
+            let response = await fetch(`http://3.95.32.80:3001/dodajankiete/prowadzacy/${params.id_wydzial}/${params.id_kierunek}/${params.id_przedmiot}`);
             response.json().then(json => setProwadzacy(json));
         }
 

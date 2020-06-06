@@ -12,4 +12,4 @@ PRIVATE_KEY='wpisz tutaj co chcesz'
 
 Uruchamianie serwera:
 - `npm i` - instalacja wszystkich niezbędnych modułów
-- `npm start` - uruchomienie lokalnego serwera pod adresem `http://http://3.95.32.80:3001`
+- `npm start` - uruchomienie lokalnego serwera pod adresem `http://3.95.32.80:3001`
