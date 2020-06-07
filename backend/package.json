@@ -14,7 +14,9 @@
     "nodemailer": "^6.4.8",
     "nodemon": "^2.0.3",
     "pg": "^8.1.0",
-    "slimjs": "^2.1.4"
+    "selenium-webdriver": "^4.0.0-alpha.7",
+    "slimjs": "^2.1.4",
+    "webdriverio": "^4.6.1"
   },
   "devDependencies": {
     "jest": "^26.0.1",
