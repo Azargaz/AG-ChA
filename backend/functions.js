@@ -40,21 +40,21 @@ async function sendMail(emails){
 	console.log(newmail);
 	let testAccount = await nodemailer.createTestAccount();
 	let transporter = nodemailer.createTransport({
-		host: "smtp.ethereal.email",
+		host: "smtp.gmail.com",
 		port: 587,
 		secure: false, // true for 465, false for other ports
 		auth: {
-		  user: testAccount.user, // generated ethereal user
-		  pass: testAccount.pass, // generated ethereal password
+		  user: 'agcha.ankiety@gmail.com', // generated ethereal user
+		  pass: '!23QweAsd', // generated ethereal password
 		},
 	  });
-
+	  message = "<b>Cześć,</b><br>Nowa ankieta została przygotowana dla Ciebie do wypełnienia.<br>";
+	  message += "Aby ją wypłnić zaloguj się do swojego konta na adres: <a href='http://ec2-3-95-32-80.compute-1.amazonaws.com:3000/student/login/'>link</a> używając nr PESEL oraz nr indeksu.";
 	let info = await transporter.sendMail({
-		from: '"Fred Foo 👻" <foo@example.com>', // sender address
+		from: 'agcha.ankiety@gmail.com', // sender address
 		to: newmail, // list of receivers
-		subject: "Hello ✔", // Subject line
-		text: "Hello world?", // plain text body
-		html: "<b>Hello world?</b>", // html body
+		subject: "Nowa ankieta do wypełnienia", // Subject line
+		html: message, // html body
 	  });
 
 	console.log("Message sent: %s", info.messageId);
