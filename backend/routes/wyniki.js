@@ -48,10 +48,13 @@ const convertAnswersToPoints = (answer) => {
 	}
 }
 
-router.get('/ranking', (req, res) => {
-	db.query('select * from projekt.odpowiedzi_do_ankiety')
+router.get('/ranking/:id_wydzial', (req, res) => {
+	const { id_wydzial } = req.params;
+	db.query('select * from projekt.odpowiedzi_do_ankiety where id_wydzial = $1', [id_wydzial])
 		.then((result) => {
 			const ranking = {};
+
+			// Zamiana tabeli z widoku na listę prowadzących i ich wyników
 			result.rows.forEach(row => {
 				if (ranking[row.imie_nazwisko]) {
 					ranking[row.imie_nazwisko] = {
@@ -66,7 +69,19 @@ router.get('/ranking', (req, res) => {
 					}
 				}
 			})
-			res.status(201).json(ranking);
+
+			// Konwersja wyników na ocenę w skali procentowej (0 - 100%)
+			Object.keys(ranking).forEach(key => {
+				ranking[key] = 100 * ranking[key].points / ranking[key].count / 4;
+			})
+
+			// Posortowanie prowadzących według ich wyników
+			const sorted_ranking = Object.keys(ranking).sort((a, b) => { return ranking[b] - ranking[a] });
+			const final_ranking = {};
+			sorted_ranking.forEach(key => {
+				final_ranking[key] = ranking[key];
+			});
+			res.status(201).json(final_ranking);
 		})
 		.catch((err) => {
 			console.error(err);
