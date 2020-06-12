@@ -128,7 +128,7 @@ router.post('/', (req, res) => {
 							)
 								.then((mails) => {
 									console.log(mails.rows);
-									// functions.sendMail(mails.rows);
+									functions.sendMail(mails.rows);
 									res.status(201).json({
 										status: 'ok',
 									})
