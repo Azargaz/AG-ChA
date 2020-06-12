@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
 
+import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import LinearProgress from '@material-ui/core/LinearProgress';
@@ -23,6 +25,7 @@ function RankingProwadzacy() {
     const [id_wydzial, setId_wydzial] = useState('');
     const [ranking, setRanking] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [nazwaWydzialu, setNazwaWydzialu] = useState('');
 
     useEffect(() => {
         fetch('http://localhost:3001/dodajankiete/wydzial')
@@ -44,12 +47,13 @@ function RankingProwadzacy() {
             .then(res => res.json())
             .then(json => {
                 setRanking(json);
+                setNazwaWydzialu(wydzialy.filter(wydzial => wydzial.id_wydzial === id_wydzial)[0].nazwa_skrocona);
             })
     }
 
     const rankingDisplay = rows => (
         <>
-            <Typography align="center" variant="h5" margin={5}>Prowadzący na wydziale {wydzialy.filter(wydzial => wydzial.id_wydzial === id_wydzial)[0].nazwa_skrocona}</Typography>
+            <Typography align="center" variant="h5" margin={5}>Prowadzący na wydziale {nazwaWydzialu}</Typography>
             {Object.keys(rows).map((key) =>
                 <Card className={classes.card}>
                     <CardContent>
@@ -81,8 +85,17 @@ function RankingProwadzacy() {
                         loading={false}
                         disabled={false}
                         handleChange={handleChange}
-                    />
-                    <Button variant="contained" color="primary" onClick={handleSubmit} disabled={id_wydzial === ''}>Wyświetl</Button>
+                    />                
+                    <Grid container justify="center" spacing={3}>
+                        <Grid item>
+                            <Button variant="contained" color="primary" component={Link} to="/pracownik/panel/">
+                                Powrót
+                            </Button>
+                        </Grid>     
+                        <Grid item>
+                            <Button variant="contained" color="primary" onClick={handleSubmit} disabled={id_wydzial === ''}>Wyświetl</Button>
+                        </Grid>               
+                    </Grid>
                 </Box>}
                 {ranking !== null && 
                 rankingDisplay(ranking)}

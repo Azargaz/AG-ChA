@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 
+import { Link } from 'react-router-dom';
+
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
@@ -60,10 +62,6 @@ function AnkietaDodaj() {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
 
-    // const handleBack = () => {
-    //     setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    // };
-
     const handleReset = () => {
         setActiveStep(0);
         setParams(defaultParams);
@@ -103,12 +101,6 @@ function AnkietaDodaj() {
                 getStepContent(activeStep)
             )}
             <Grid container justify="center">
-                {/* <Button
-                    disabled={activeStep === 0}
-                    onClick={handleBack}
-                >
-                    Wróć
-                </Button> */}
                 {activeStep < steps.length ? (
                     <Button variant="contained" color="primary" onClick={handleNext} disabled={!checkIfReadyForNext()}>
                         Dalej
@@ -119,6 +111,13 @@ function AnkietaDodaj() {
                         <Button variant="contained" color="primary" onClick={handleSubmit}>Wyślij</Button>
                     </>
                 )}
+            </Grid>
+            <Grid container justify="center">
+                <Box m={3}>
+                    <Button variant="contained" color="primary" component={Link} to="/pracownik/panel">
+                        Powrót
+                    </Button>
+                </Box>                    
             </Grid>
         </div>
     )
