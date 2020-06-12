@@ -42,7 +42,7 @@ join  przedmiot p on pr.id_przedmiot = p.id_przedmiot
 create or replace view odpowiedzi_do_ankiety as (
 	select w.id_wydzial, p.tresc_pyt, o.id_ankieta, o.id_pytanie, pr.tytul, pr.imie_nazwisko, o.tresc_odp, COUNT(o.id_student) from odpowiedz o 
 	join pytanie p on o.id_pytanie = p.id_pytanie 
-	join ankieta a on a.id_ankieta = o.id_pytanie
+	join ankieta a on a.id_ankieta = o.id_ankieta
 	join prowadzacy pr on pr.id_prowadzacy = a.id_prowadzacy
 	join przedmiot prz on prz.id_przedmiot = pr.id_przedmiot
 	join kierunek k on k.id_kierunek = prz.id_kierunek
