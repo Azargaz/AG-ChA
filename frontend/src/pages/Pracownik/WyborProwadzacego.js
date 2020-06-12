@@ -32,7 +32,7 @@ function WyborProwadzacego(props) {
         if(params.id_wydzial !== '' && params.id_kierunek !== '' && params.id_przedmiot === '')
             fetchPrzedmioty();
         if(params.id_wydzial !== '' && params.id_kierunek !== '' && params.id_przedmiot !== '' && params.id_prowadzacy === '')
-        fetchProwadzacy();
+            fetchProwadzacy();
     }, [params])
 
     const [wydzialy, setWydzialy] = useState([])
