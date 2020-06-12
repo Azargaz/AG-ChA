@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 
+import { Link } from 'react-router-dom';
+
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
@@ -8,6 +10,8 @@ import TextField from '@material-ui/core/TextField';
 
 import WyborProwadzacego from './WyborProwadzacego';
 import WyborStudentow from './WyborStudentow';
+
+import { API_URL } from '../../utils/config';
 
 function getSteps() {
     return ['Wybierz wydział, kierunek, przedmiot i prowadzącego', 'Dodaj studentów', 'Ustaw datę'];
@@ -60,17 +64,13 @@ function AnkietaDodaj() {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
 
-    // const handleBack = () => {
-    //     setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    // };
-
     const handleReset = () => {
         setActiveStep(0);
         setParams(defaultParams);
     };
 
     const handleSubmit = () => {
-        fetch('http://3.95.32.80:3001/dodajankiete/', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(params) })
+        fetch(API_URL + '/dodajankiete/', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(params) })
             .then(res => res.json())
             .then(json => {
                 console.log(json)
@@ -103,12 +103,6 @@ function AnkietaDodaj() {
                 getStepContent(activeStep)
             )}
             <Grid container justify="center">
-                {/* <Button
-                    disabled={activeStep === 0}
-                    onClick={handleBack}
-                >
-                    Wróć
-                </Button> */}
                 {activeStep < steps.length ? (
                     <Button variant="contained" color="primary" onClick={handleNext} disabled={!checkIfReadyForNext()}>
                         Dalej
@@ -119,6 +113,13 @@ function AnkietaDodaj() {
                         <Button variant="contained" color="primary" onClick={handleSubmit}>Wyślij</Button>
                     </>
                 )}
+            </Grid>
+            <Grid container justify="center">
+                <Box m={3}>
+                    <Button variant="contained" color="primary" component={Link} to="/pracownik/panel">
+                        Powrót
+                    </Button>
+                </Box>                    
             </Grid>
         </div>
     )

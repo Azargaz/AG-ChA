@@ -8,6 +8,8 @@ import LoginForm from '../../components/LoginForm';
 import Image from '../../components/Image';
 import LogoAGH from '../../img/logo_agh_kolor.png';
 
+import { API_URL } from '../../utils/config';
+
 function LoginPracownik() {
     const { setDecodedToken, getDecodedToken, setAuthenticated, setToken } = useContext(AuthContext);
     const [authErrors, setAuthErrors] = useState(null);
@@ -19,7 +21,7 @@ function LoginPracownik() {
 
     const authenticatePracownik = () => {
         const { login, haslo } = formData;
-        fetch('http://3.95.32.80:3001/users/pracowniklogin', {
+        fetch(API_URL + '/users/pracowniklogin', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

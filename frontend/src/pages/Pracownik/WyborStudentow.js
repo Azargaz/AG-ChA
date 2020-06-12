@@ -4,13 +4,15 @@ import Grid from '@material-ui/core/Grid';
 
 import CheckboxList from '../../components/CheckboxList';
 
+import { API_URL } from '../../utils/config';
+
 function WyborStudentow(props) {
     const { params, setParams } = props;
     const [studenci, setStudenci] = useState([])
 
     useEffect(() => {
         async function fetchStudenci() {
-            let response = await fetch('http://3.95.32.80:3001/dodajankiete/studenci/' + params.id_wydzial);
+            let response = await fetch(API_URL + '/dodajankiete/studenci/' + params.id_wydzial);
             response.json().then(json => setStudenci(json));
         }
 

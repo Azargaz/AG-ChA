@@ -6,9 +6,11 @@ import { AuthContext } from '../../utils/auth';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 import DataTable from '../../components/DataTable';
+import { API_URL } from '../../utils/config';
 
 function AnkietaWypelnione() {
     const { decodedToken } = useContext(AuthContext);
@@ -16,7 +18,7 @@ function AnkietaWypelnione() {
     const [ankiety, setAnkiety] = useState([]);
 
     useEffect(() => {
-        fetch('http://3.95.32.80:3001/ankieta/wypelnione/' + decodedToken.id_student)
+        fetch(API_URL + '/ankieta/wypelnione/' + decodedToken.id_student)
             .then(res => res.json())
             .then(json => {
                 convertAnkiety(json);
@@ -38,6 +40,11 @@ function AnkietaWypelnione() {
                 <Typography align="center" variant="h4" margin={5}>Wypełnione ankiety</Typography>
             </Box>
             { loading ? <CircularProgress /> : <DataTable idName="id_ankieta" headers={headers} data={ankiety} button={button} />}
+            <Grid container justify="center">
+                <Box m={3}>
+                    <Button variant="contained" color="primary" component={Link} to="/student/panel">Powrót</Button>
+                </Box>
+            </Grid>
         </div>
     )
 }

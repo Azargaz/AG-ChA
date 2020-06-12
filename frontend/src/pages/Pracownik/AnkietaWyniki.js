@@ -5,16 +5,19 @@ import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 import DataTable from '../../components/DataTable';
+
+import { API_URL } from '../../utils/config';
 
 function AnkietaWyniki() {
     const [ankiety, setAnkiety] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch('http://3.95.32.80:3001/wyniki/')
+        fetch(API_URL + '/wyniki/')
             .then(res => res.json())
             .then(json => {
                 convertAnkiety(json);
@@ -36,6 +39,13 @@ function AnkietaWyniki() {
                 <Typography align="center" variant="h4" margin={5}>Ankiety</Typography>
             </Box>
             { loading ? <CircularProgress /> : <DataTable idName="id_ankieta" headers={headers} data={ankiety} button={button} />}
+            <Grid container justify="center">
+                <Box m={3}>
+                    <Button variant="contained" color="primary" component={Link} to="/pracownik/panel">
+                        Powrót
+                    </Button>
+                </Box>                    
+            </Grid>
         </div>
     )
 }

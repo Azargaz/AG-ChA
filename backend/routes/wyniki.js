@@ -20,7 +20,7 @@ router.get('/', (req, res) => {
 router.get('/odpowiedzi/:id_ankieta', (req, res) => {
 	const { id_ankieta } = req.params;
 
-	db.query('select id_ankieta, id_pytanie, tresc_odp, count from projekt.odpowiedzi_do_ankiety where id_ankieta=$1', [id_ankieta])
+	db.query('select id_ankieta, id_pytanie, tresc_pyt, tresc_odp, count from projekt.odpowiedzi_do_ankiety where id_ankieta=$1', [id_ankieta])
 		.then((result) => {
 			res.status(201).json(result.rows);
 		})

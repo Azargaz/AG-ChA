@@ -2,12 +2,13 @@ import React, { useState, useEffect, useContext } from 'react'
 
 import { Link } from 'react-router-dom';
 import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
 import QuestionsTable from '../../components/QuestionsTable';
-import history from '../../utils/history';
 import { AuthContext } from '../../utils/auth';
+import { API_URL } from '../../utils/config';
 
 function AnkietaW(props) {
     const { id } = props.match.params;
@@ -21,12 +22,12 @@ function AnkietaW(props) {
     const [odpowiedzi, setOdpowiedzi] = useState([])
 
     useEffect(() => {
-        fetch('http://3.95.32.80:3001/odpowiedzi/ankieta/' + id)
+        fetch(API_URL + '/odpowiedzi/ankieta/' + id)
             .then(res => res.json())
             .then(json => {
                 getPytania(json);
             })
-        fetch('http://3.95.32.80:3001/odpowiedzi/' + id + '/' + id_student)
+        fetch(API_URL + '/odpowiedzi/' + id + '/' + id_student)
             .then(res => res.json())
             .then(json => {
                 getOdpowiedzi(json);
@@ -51,17 +52,17 @@ function AnkietaW(props) {
         setOdpowiedzi(odp);
     }
 
-    const handleSubmit = async () => {
-        
-    }
-
     return (
         <div>
             <Box m={3}>
                 <Typography align="center" variant="h4" margin={5}>Wypełnij ankietę</Typography>
             </Box>
             <QuestionsTable headers={headers} data={pytania} openQuestions={otwarte} answers={odpowiedzi} disabled={true} />
-            <Button variant="contained" color="primary" component={Link} to={"/student/panel/poprzednie_ankiety/"}>Powrót</Button>
+            <Grid container justify="center">
+                <Box m={3}>
+                    <Button variant="contained" color="primary" component={Link} to="/student/panel/poprzednie_ankiety">Powrót</Button>
+                </Box>
+            </Grid>
         </div>
     )
 }

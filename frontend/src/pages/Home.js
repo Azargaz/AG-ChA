@@ -16,11 +16,6 @@ function Home() {
         <Grid container justify="center" alignItems="center">
             <Grid item md={6}>
                 <Image src={LogoAGH}/>
-                <Box m={3}>
-                    <Typography align="center" variant="h4">
-                        {/* Strona główna */}
-                    </Typography>
-                </Box>
                 <Grid container justify="center" alignItems="center" spacing={3}>
                     {!authenticated && 
                     <ButtonList buttons={[

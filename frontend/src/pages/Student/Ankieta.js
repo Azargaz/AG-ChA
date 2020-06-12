@@ -1,12 +1,16 @@
 import React, { useState, useEffect, useContext } from 'react'
 
+import { Link } from 'react-router-dom';
+
 import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
 import QuestionsTable from '../../components/QuestionsTable';
 import history from '../../utils/history';
 import { AuthContext } from '../../utils/auth';
+import { API_URL } from '../../utils/config';
 
 function Ankieta(props) {
     const { id } = props.match.params;
@@ -20,7 +24,7 @@ function Ankieta(props) {
     const [odpowiedzi, setOdpowiedzi] = useState([])
 
     useEffect(() => {
-        fetch('http://3.95.32.80:3001/odpowiedzi/ankieta/' + id)
+        fetch(API_URL + '/odpowiedzi/ankieta/' + id)
             .then(res => res.json())
             .then(json => {
                 getPytania(json);
@@ -58,7 +62,7 @@ function Ankieta(props) {
     const handleSubmit = async () => {
         for(let i = 0; i < odpowiedzi.length; i++) {
             const odpowiedz = odpowiedzi[i];
-            const t = await fetch('http://3.95.32.80:3001/odpowiedzi/' + id, { 
+            const t = await fetch(API_URL + '/odpowiedzi/' + id, { 
                 method: 'POST', 
                 headers: { 'Content-Type': 'application/json' }, 
                 body: JSON.stringify({
@@ -69,7 +73,7 @@ function Ankieta(props) {
             })
 
             if(i === odpowiedzi.length-1) {
-                await fetch('http://3.95.32.80:3001/odpowiedzi/wypelniona/' + id, { 
+                await fetch(API_URL + '/odpowiedzi/wypelniona/' + id, { 
                     method: 'POST', 
                     headers: { 'Content-Type': 'application/json' }, 
                     body: JSON.stringify({
@@ -86,8 +90,17 @@ function Ankieta(props) {
             <Box m={3}>
                 <Typography align="center" variant="h4" margin={5}>Wypełnij ankietę</Typography>
             </Box>
-            <QuestionsTable headers={headers} data={pytania} openQuestions={otwarte} onUpdateAnswer={updateOdpowiedz} answers={odpowiedzi} disabled={false} />
-            <Button variant="contained" color="primary" onClick={handleSubmit} disabled={odpowiedzi.length < pytania.length}>Wyślij</Button>
+            <Box my={3}>
+                <QuestionsTable headers={headers} data={pytania} openQuestions={otwarte} onUpdateAnswer={updateOdpowiedz} answers={odpowiedzi} disabled={false} />
+            </Box>
+            <Grid container justify="center" spacing={3}>
+                <Grid item>
+                    <Button variant="contained" color="primary" component={Link} to="/student/panel/ankiety">Powrót</Button>
+                </Grid>     
+                <Grid item>
+                    <Button variant="contained" color="primary" onClick={handleSubmit} disabled={odpowiedzi.length < pytania.length}>Wyślij</Button>
+                </Grid>               
+            </Grid>
         </div>
     )
 }
