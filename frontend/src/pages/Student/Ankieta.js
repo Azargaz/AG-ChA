@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react'
 
+import { Link } from 'react-router-dom';
+
 import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
@@ -87,8 +90,17 @@ function Ankieta(props) {
             <Box m={3}>
                 <Typography align="center" variant="h4" margin={5}>Wypełnij ankietę</Typography>
             </Box>
-            <QuestionsTable headers={headers} data={pytania} openQuestions={otwarte} onUpdateAnswer={updateOdpowiedz} answers={odpowiedzi} disabled={false} />
-            <Button variant="contained" color="primary" onClick={handleSubmit} disabled={odpowiedzi.length < pytania.length}>Wyślij</Button>
+            <Box my={3}>
+                <QuestionsTable headers={headers} data={pytania} openQuestions={otwarte} onUpdateAnswer={updateOdpowiedz} answers={odpowiedzi} disabled={false} />
+            </Box>
+            <Grid container justify="center" spacing={3}>
+                <Grid item>
+                    <Button variant="contained" color="primary" component={Link} to="/student/panel/ankiety">Powrót</Button>
+                </Grid>     
+                <Grid item>
+                    <Button variant="contained" color="primary" onClick={handleSubmit} disabled={odpowiedzi.length < pytania.length}>Wyślij</Button>
+                </Grid>               
+            </Grid>
         </div>
     )
 }
