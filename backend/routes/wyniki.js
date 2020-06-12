@@ -73,7 +73,7 @@ router.get('/ranking/:id_wydzial', (req, res) => {
 
 			// Konwersja wyników na ocenę w skali procentowej (0 - 100%)
 			Object.keys(ranking).forEach(key => {
-				ranking[key] = 100 * ranking[key].points / ranking[key].count / 4;
+				ranking[key] = (100 * ranking[key].points / ranking[key].count / 4).toFixed(2);;
 				console.log(key);
 			})
 			
