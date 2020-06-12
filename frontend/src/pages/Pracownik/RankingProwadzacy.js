@@ -25,7 +25,7 @@ function RankingProwadzacy() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch('http://localhost:3001/dodajankiete/wydzial')
+        fetch('http://http://3.95.32.80:3001/dodajankiete/wydzial')
             .then(res => res.json())
             .then(json => {
                 setWydzialy(json);
@@ -40,7 +40,7 @@ function RankingProwadzacy() {
     const handleSubmit = () => {
         if(id_wydzial === '') return;
         
-        fetch('http://localhost:3001/wyniki/ranking/' + id_wydzial)
+        fetch('http://http://3.95.32.80:3001/wyniki/ranking/' + id_wydzial)
             .then(res => res.json())
             .then(json => {
                 setRanking(json);
