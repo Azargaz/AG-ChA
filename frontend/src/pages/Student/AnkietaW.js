@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 
+import { Link } from 'react-router-dom';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -60,7 +61,7 @@ function AnkietaW(props) {
                 <Typography align="center" variant="h4" margin={5}>Wypełnij ankietę</Typography>
             </Box>
             <QuestionsTable headers={headers} data={pytania} openQuestions={otwarte} answers={odpowiedzi} disabled={true} />
-            <Button variant="contained" color="primary" onClick={handleSubmit} disabled={odpowiedzi.length < pytania.length}>Wyślij</Button>
+            <Button variant="contained" color="primary" component={Link} to={"/student/panel/poprzednie_ankiety/"}>Powrót</Button>
         </div>
     )
 }

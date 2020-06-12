@@ -38,7 +38,7 @@ function Navbar() {
                     <IconButton
                         color="inherit"
                         component={Link}
-                        to="/student/panel"
+                        to="/student/panel/"
                     >
                         <AppsIcon />
                     </IconButton>
@@ -48,7 +48,7 @@ function Navbar() {
                     <IconButton
                         color="inherit"
                         component={Link}
-                        to="/pracownik/panel"
+                        to="/pracownik/panel/"
                     >
                         <AppsIcon />
                     </IconButton>
@@ -59,7 +59,7 @@ function Navbar() {
                         <IconButton
                             color="inherit"
                             component={Link}
-                            to="/pracownik/login"
+                            to="/pracownik/login/"
                         >
                             <SupervisorAccountIcon />
                         </IconButton>
@@ -68,7 +68,7 @@ function Navbar() {
                         <IconButton
                             color="inherit"
                             component={Link}
-                            to="/student/login"
+                            to="/student/login/"
                         >
                             <AccountCircle />
                         </IconButton>
