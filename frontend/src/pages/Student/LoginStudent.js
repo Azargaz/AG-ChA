@@ -7,6 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import LoginForm from '../../components/LoginForm';
 import Image from '../../components/Image';
 import LogoAGH from '../../img/logo_agh_kolor.png';
+import { API_URL } from '../../utils/config';
 
 function LoginStudent() {
     const { setDecodedToken, getDecodedToken, setAuthenticated, setToken } = useContext(AuthContext);
@@ -19,7 +20,7 @@ function LoginStudent() {
 
     const authenticateStudent = () => {
         const { indeks, pesel } = formData;
-        fetch('http://localhost:3001/users/studentlogin', {
+        fetch(API_URL + '/users/studentlogin', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

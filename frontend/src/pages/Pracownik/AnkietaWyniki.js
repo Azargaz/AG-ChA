@@ -10,12 +10,14 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 import DataTable from '../../components/DataTable';
 
+import { API_URL } from '../../utils/config';
+
 function AnkietaWyniki() {
     const [ankiety, setAnkiety] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch('http://localhost:3001/wyniki/')
+        fetch(API_URL + '/wyniki/')
             .then(res => res.json())
             .then(json => {
                 convertAnkiety(json);

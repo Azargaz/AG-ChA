@@ -13,6 +13,8 @@ import Button from '@material-ui/core/Button';
 
 import SelectList from '../../components/SelectList';
 
+import { API_URL } from '../../utils/config';
+
 const useStyles = makeStyles({
     card: {
         margin: '1em 0',
@@ -28,7 +30,7 @@ function RankingProwadzacy() {
     const [nazwaWydzialu, setNazwaWydzialu] = useState('');
 
     useEffect(() => {
-        fetch('http://localhost:3001/dodajankiete/wydzial')
+        fetch(API_URL + '/dodajankiete/wydzial')
             .then(res => res.json())
             .then(json => {
                 setWydzialy(json);
@@ -43,7 +45,7 @@ function RankingProwadzacy() {
     const handleSubmit = () => {
         if(id_wydzial === '') return;
         
-        fetch('http://localhost:3001/wyniki/ranking/' + id_wydzial)
+        fetch(API_URL + '/wyniki/ranking/' + id_wydzial)
             .then(res => res.json())
             .then(json => {
                 setRanking(json);

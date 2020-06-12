@@ -11,6 +11,8 @@ import TextField from '@material-ui/core/TextField';
 import WyborProwadzacego from './WyborProwadzacego';
 import WyborStudentow from './WyborStudentow';
 
+import { API_URL } from '../../utils/config';
+
 function getSteps() {
     return ['Wybierz wydział, kierunek, przedmiot i prowadzącego', 'Dodaj studentów', 'Ustaw datę'];
 }
@@ -68,7 +70,7 @@ function AnkietaDodaj() {
     };
 
     const handleSubmit = () => {
-        fetch('http://localhost:3001/dodajankiete/', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(params) })
+        fetch(API_URL + '/dodajankiete/', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(params) })
             .then(res => res.json())
             .then(json => {
                 console.log(json)

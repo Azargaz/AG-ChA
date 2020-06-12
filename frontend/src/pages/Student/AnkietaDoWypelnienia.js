@@ -10,6 +10,7 @@ import Grid from '@material-ui/core/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 import DataTable from '../../components/DataTable';
+import { API_URL } from '../../utils/config';
 
 function AnkietaDoWypelnienia() {
     const { decodedToken } = useContext(AuthContext);
@@ -17,7 +18,7 @@ function AnkietaDoWypelnienia() {
     const [ankiety, setAnkiety] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:3001/ankieta/dowypelnienia/' + decodedToken.id_student)
+        fetch(API_URL + '/ankieta/dowypelnienia/' + decodedToken.id_student)
             .then(res => res.json())
             .then(json => {
                 convertAnkiety(json);

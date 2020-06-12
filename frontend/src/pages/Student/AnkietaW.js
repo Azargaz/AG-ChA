@@ -6,8 +6,8 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
 import QuestionsTable from '../../components/QuestionsTable';
-import history from '../../utils/history';
 import { AuthContext } from '../../utils/auth';
+import { API_URL } from '../../utils/config';
 
 function AnkietaW(props) {
     const { id } = props.match.params;
@@ -21,12 +21,12 @@ function AnkietaW(props) {
     const [odpowiedzi, setOdpowiedzi] = useState([])
 
     useEffect(() => {
-        fetch('http://localhost:3001/odpowiedzi/ankieta/' + id)
+        fetch(API_URL + '/odpowiedzi/ankieta/' + id)
             .then(res => res.json())
             .then(json => {
                 getPytania(json);
             })
-        fetch('http://localhost:3001/odpowiedzi/' + id + '/' + id_student)
+        fetch(API_URL + '/odpowiedzi/' + id + '/' + id_student)
             .then(res => res.json())
             .then(json => {
                 getOdpowiedzi(json);
@@ -49,10 +49,6 @@ function AnkietaW(props) {
             return { id: Number(odpowiedz.id_pytanie), odp: odpowiedz.tresc_odp }
         })
         setOdpowiedzi(odp);
-    }
-
-    const handleSubmit = async () => {
-        
     }
 
     return (

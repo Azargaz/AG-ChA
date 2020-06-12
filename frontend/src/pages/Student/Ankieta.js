@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import QuestionsTable from '../../components/QuestionsTable';
 import history from '../../utils/history';
 import { AuthContext } from '../../utils/auth';
+import { API_URL } from '../../utils/config';
 
 function Ankieta(props) {
     const { id } = props.match.params;
@@ -20,7 +21,7 @@ function Ankieta(props) {
     const [odpowiedzi, setOdpowiedzi] = useState([])
 
     useEffect(() => {
-        fetch('http://localhost:3001/odpowiedzi/ankieta/' + id)
+        fetch(API_URL + '/odpowiedzi/ankieta/' + id)
             .then(res => res.json())
             .then(json => {
                 getPytania(json);
@@ -58,7 +59,7 @@ function Ankieta(props) {
     const handleSubmit = async () => {
         for(let i = 0; i < odpowiedzi.length; i++) {
             const odpowiedz = odpowiedzi[i];
-            const t = await fetch('http://localhost:3001/odpowiedzi/' + id, { 
+            const t = await fetch(API_URL + '/odpowiedzi/' + id, { 
                 method: 'POST', 
                 headers: { 'Content-Type': 'application/json' }, 
                 body: JSON.stringify({
@@ -69,7 +70,7 @@ function Ankieta(props) {
             })
 
             if(i === odpowiedzi.length-1) {
-                await fetch('http://localhost:3001/odpowiedzi/wypelniona/' + id, { 
+                await fetch(API_URL + '/odpowiedzi/wypelniona/' + id, { 
                     method: 'POST', 
                     headers: { 'Content-Type': 'application/json' }, 
                     body: JSON.stringify({
