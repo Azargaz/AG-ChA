@@ -1,0 +1,25 @@
+?!contents -R2 -g -p -f -h
+!define TEST_SYSTEM {slim}
+!define COMMAND_PATTERN {node C:\Users\wikto\AppData\Roaming\npm\node_modules\slimjs\src\SlimJS %p}
+!define SLIM_PORT {9086}
+!path C:\Users\wikto\Desktop\new IO\AG-ChA\backend\tests\fixture
+
+|import            |
+|fixture|
+
+|testAnkietaMultirowInsert|
+|rows | id |callMethod? |
+|1,2  |1   |(1, $1, false),(1, $2, false)  |
+
+|testbetterResult|
+|id1 | score1 | id2 | score2 |callMethod? |
+| 1  |  95    |  2  |  92    |     1      |
+| 1  |  92    |  2  |  95    |     2      |
+| 1  |  95    |  2  |  95    |     0      |
+
+
+|testChooseBetterProf|
+|id1 | arr1        | id2 | arr2           |callMethod? |
+| 1  | 95,92,91,94 |  2  |  91,92,91,94   |     1      |
+| 1  | 91,92,91,94 |  2  |  95,92,91,94   |     2      |
+| 1  | 91,92,91,94 |  2  |  91,92,91,94   |     0      |
